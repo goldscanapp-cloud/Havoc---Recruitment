@@ -248,17 +248,17 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
       <div class="form-sub">Fill in your details and upload a full body photo. <strong>We review every application personally.</strong> First to apply in your city get first bookings when we launch there.</div>
     </div>
     <div>
-      <div class="field"><label>Full name</label><input type="text" placeholder="First and last name"></div>
-      <div class="field"><label>Email</label><input type="email" placeholder="your@email.com"></div>
-      <div class="field"><label>Phone number</label><input type="tel" placeholder="+27 or international"></div>
-      <div class="field"><label>Your city</label><input type="text" placeholder="City"></div>
+      <div class="field"><label>Full name</label><input type="text" name="name" placeholder="First and last name" required></div>
+      <div class="field"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required></div>
+      <div class="field"><label>Phone number</label><input type="tel" name="phone" placeholder="+27 or international" required></div>
+      <div class="field"><label>Your city</label><input type="text" name="city" placeholder="City" required></div>
       <div class="frow">
-        <div class="field"><label>Height</label><input type="text" placeholder="e.g. 188cm"></div>
-        <div class="field"><label>Weight</label><input type="text" placeholder="e.g. 100kg"></div>
+        <div class="field"><label>Height</label><input type="text" name="height" placeholder="e.g. 188cm"></div>
+        <div class="field"><label>Weight</label><input type="text" name="weight" placeholder="e.g. 100kg"></div>
       </div>
-      <div class="field"><label>Build type</label><select><option value="" disabled selected>Select your build</option><option>Athletic / muscular</option><option>Large / heavyweight</option><option>Tall and lean</option></select></div>
+      <div class="field"><label>Build type</label><select name="build_type"><option value="" disabled selected>Select your build</option><option>Athletic / muscular</option><option>Large / heavyweight</option><option>Tall and lean</option></select></div>
       <div class="field"><label>Full body photo</label>
-        <div class="upload"><i class="ti ti-camera"></i><div class="upload-l">Upload your photo</div><div class="upload-h">Full body, clear photo. Required.</div></div>
+        <input type="file" name="photo" accept="image/*" style="width:100%;background:#141414;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-family:'Inter',sans-serif;font-size:12px;padding:11px 12px;border-radius:0;">
       </div>
       <button type="submit" class="sub-btn">Submit my application</button>
       <div class="fnote">We review every application personally. You'll hear from us within 24 hours.</div>
