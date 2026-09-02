@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAVOC — Book Presence</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+/* NAV */
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 48px; border-bottom: 1px solid rgba(255,255,255,0.07); position: sticky; top: 0; background: rgba(8,8,8,0.95); backdrop-filter: blur(12px); z-index: 100; }
+.nav-logo { font-size: 28px; font-weight: 800; letter-spacing: 0.25em; color: #fff; border: 2px solid #fff; padding: 4px 14px; line-height: 1; text-decoration: none; }
+.nav-links { display: flex; gap: 32px; }
+.nav-links a { font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 500; text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: #fff; }
+.nav-cta { background: #fff; color: #080808; font-size: 11px; font-weight: 700; padding: 9px 18px; letter-spacing: 0.07em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
+.nav-cta:hover { opacity: 0.85; }
+
+/* HERO */
+.hero { padding: 100px 48px 72px; min-height: 85vh; display: flex; flex-direction: column; justify-content: flex-end; }
+.badge { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.04em; margin-bottom: 28px; }
+.badge-dot { width: 6px; height: 6px; background: rgba(255,255,255,0.5); border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.h1 { font-size: clamp(52px,8vw,100px); font-weight: 800; line-height: 0.9; letter-spacing: -0.04em; color: #fff; margin-bottom: 6px; }
+.h1o { font-size: clamp(52px,8vw,100px); font-weight: 800; line-height: 0.9; letter-spacing: -0.04em; -webkit-text-stroke: 2px rgba(255,255,255,0.85); color: transparent; display: block; margin-bottom: 28px; }
+.hero-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.hero-sub { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.75; max-width: 380px; }
+.hero-sub strong { color: #fff; font-weight: 600; }
+.hero-btns { display: flex; gap: 14px; align-items: center; }
+.btn-p { background: #fff; color: #080808; font-size: 12px; font-weight: 700; padding: 14px 28px; letter-spacing: 0.07em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; display: inline-block; }
+.btn-p:hover { opacity: 0.85; }
+.btn-g { font-size: 12px; color: rgba(255,255,255,0.4); text-decoration: none; }
+.btn-g:hover { color: rgba(255,255,255,0.7); }
+
+/* USE CASES */
+.sec { padding: 56px 48px; border-top: 1px solid rgba(255,255,255,0.05); }
+.eye { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 24px; }
+.sec-h { font-size: clamp(36px,4vw,52px); font-weight: 800; line-height: 0.9; letter-spacing: -0.03em; color: #fff; margin-bottom: 16px; }
+.sec-b { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.75; max-width: 560px; margin-bottom: 40px; }
+.sec-b strong { color: #fff; font-weight: 600; }
+
+.cards4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,0.05); }
+.card { background: #0c0c0c; padding: 28px 24px; }
+.card i { font-size: 22px; color: rgba(255,255,255,0.5); }
+.card-t { font-size: 14px; font-weight: 700; color: #fff; margin: 14px 0 8px; }
+.card-b { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.65; }
+
+/* HOW IT WORKS */
+.steps3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(255,255,255,0.05); }
+.step { background: #0a0a0a; padding: 36px 28px; }
+.step-n { font-size: 44px; font-weight: 800; color: rgba(255,255,255,0.07); letter-spacing: -0.04em; margin-bottom: 18px; }
+.step-t { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+.step-b { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.65; }
+
+/* RATES */
+.rates { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,0.06); }
+.rc { background: #080808; padding: 32px; }
+.rc-r { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 12px; font-weight: 600; }
+.rc-n { font-size: 42px; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1; margin-bottom: 6px; }
+.rc-sub { font-size: 12px; color: rgba(255,255,255,0.35); margin-bottom: 12px; }
+.rc-min { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 600; }
+
+/* BOOKING FORM */
+.book-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.book-left {}
+.book-h { font-size: clamp(36px,4vw,52px); font-weight: 800; line-height: 0.9; letter-spacing: -0.03em; color: #fff; margin-bottom: 16px; }
+.book-sub { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; margin-bottom: 32px; }
+.book-sub strong { color: rgba(255,255,255,0.75); font-weight: 600; }
+
+.trust { display: flex; flex-direction: column; gap: 14px; }
+.trust-item { display: flex; align-items: flex-start; gap: 14px; }
+.trust-item i { font-size: 16px; color: rgba(255,255,255,0.4); flex-shrink: 0; margin-top: 2px; }
+.trust-text { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.55; }
+.trust-text strong { color: rgba(255,255,255,0.8); font-weight: 600; display: block; margin-bottom: 2px; }
+
+.book-right {}
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
+.field input, .field select, .field textarea { width: 100%; background: #141414; border: 1px solid rgba(255,255,255,0.1); color: #fff; font-family: 'Inter',sans-serif; font-size: 13px; padding: 13px 14px; outline: none; -webkit-appearance: none; border-radius: 0; transition: border-color 0.2s; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: rgba(255,255,255,0.35); }
+.field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,0.2); }
+.field select option { background: #141414; }
+.field textarea { resize: vertical; min-height: 90px; }
+.frow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.price-display { background: #0e0e0e; border: 1px solid rgba(255,255,255,0.08); padding: 16px 18px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+.price-label { font-size: 11px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.08em; }
+.price-value { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+.submit-btn { width: 100%; background: #fff; color: #080808; font-family: 'Inter',sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.08em; padding: 16px; border: none; cursor: pointer; text-transform: uppercase; transition: opacity 0.2s; }
+.submit-btn:hover { opacity: 0.88; }
+.fnote { font-size: 11px; color: rgba(255,255,255,0.2); text-align: center; margin-top: 12px; line-height: 1.6; }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; gap: 1px; }
+.faq-item { background: #0c0c0c; padding: 24px 28px; cursor: pointer; }
+.faq-q { font-size: 14px; font-weight: 600; color: #fff; display: flex; justify-content: space-between; align-items: center; }
+.faq-q i { font-size: 16px; color: rgba(255,255,255,0.35); }
+.faq-a { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.7; margin-top: 14px; display: none; }
+.faq-item.open .faq-a { display: block; }
+.faq-item.open .faq-q i { transform: rotate(45deg); }
+
+/* TICKER */
+.ticker { border-top: 1px solid rgba(255,255,255,0.08); padding: 16px 0; overflow: hidden; background: #080808; }
+.ticker-inner { display: flex; animation: tick 30s linear infinite; width: max-content; }
+@keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+.ti { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: rgba(255,255,255,0.5); text-transform: uppercase; padding: 0 28px; white-space: nowrap; }
+.ti::after { content: '·'; margin-left: 28px; color: rgba(255,255,255,0.2); }
+
+/* FOOTER */
+.foot { border-top: 1px solid rgba(255,255,255,0.07); padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; }
+.fl { font-size: 17px; font-weight: 800; letter-spacing: 0.25em; color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.2); padding: 4px 12px; }
+.fc { font-size: 11px; color: rgba(255,255,255,0.28); }
+.foot-links { display: flex; gap: 24px; }
+.foot-links a { font-size: 11px; color: rgba(255,255,255,0.28); text-decoration: none; }
+.foot-links a:hover { color: rgba(255,255,255,0.6); }
+
+@media (max-width: 768px) {
+  .nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 80px 20px 48px; min-height: auto; }
+  .sec { padding: 40px 20px; }
+  .cards4 { grid-template-columns: repeat(2,1fr); }
+  .steps3 { grid-template-columns: 1fr; }
+  .rates { grid-template-columns: repeat(2,1fr); }
+  .book-wrap { grid-template-columns: 1fr; gap: 40px; }
+  .frow { grid-template-columns: 1fr; }
+  .foot { padding: 20px; flex-direction: column; gap: 16px; text-align: center; }
+  .foot-links { justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/" class="nav-logo">HAVOC</a>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="/index.html">Join as a Havoc</a>
+  </div>
+  <a href="#book" class="nav-cta">Book Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge"><span class="badge-dot"></span>Available worldwide — book presence anywhere</div>
+  <div class="h1">The presence</div>
+  <div class="h1">you need.</div>
+  <span class="h1o">When you need it.</span>
+  <div class="hero-bottom">
+    <div class="hero-sub">
+      <strong>Commanding individuals, on demand.</strong> Book a Havoc for your event, shoot, corporate function, or personal appearance — in minutes. Vetted, professional, and built to hold a room.
+    </div>
+    <div class="hero-btns">
+      <a href="#book" class="btn-p">Book a Havoc</a>
+      <a href="#how" class="btn-g">See how it works ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="sec">
+  <div class="eye">What we're booked for</div>
+  <div class="cards4">
+    <div class="card">
+      <i class="ti ti-video"></i>
+      <div class="card-t">Video shoots</div>
+      <div class="card-b">On-set presence for music videos, content shoots, and productions. They show up, they hold the room.</div>
+    </div>
+    <div class="card">
+      <i class="ti ti-door"></i>
+      <div class="card-t">Door & events</div>
+      <div class="card-b">Clubs, private functions, launches, and parties. Professional door presence booked in minutes.</div>
+    </div>
+    <div class="card">
+      <i class="ti ti-user-check"></i>
+      <div class="card-t">Accompaniment</div>
+      <div class="card-b">Need someone commanding by your side? Meetings, nights out, public appearances, travel.</div>
+    </div>
+    <div class="card">
+      <i class="ti ti-crown"></i>
+      <div class="card-t">VIP & corporate</div>
+      <div class="card-b">Galas, boardrooms, product launches, and executive functions. Suited, sharp, and ready.</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec" id="how" style="background:#0a0a0a;">
+  <div class="eye">How it works</div>
+  <div class="sec-h" style="margin-bottom:32px;">Three steps.<br>That's it.</div>
+  <div class="steps3">
+    <div class="step">
+      <div class="step-n">01</div>
+      <div class="step-t">Book online</div>
+      <div class="step-b">Fill in your booking details — type, date, time, location, and duration. Takes 2 minutes.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">02</div>
+      <div class="step-t">We confirm your Havoc</div>
+      <div class="step-b">We match you with a verified Havoc in your area. You get their details and can communicate directly.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">03</div>
+      <div class="step-t">They show up.</div>
+      <div class="step-b">Your Havoc arrives on time, dressed exactly as requested, ready to hold the room. Simple.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec" id="pricing">
+  <div class="eye">Pricing</div>
+  <div class="sec-h" style="margin-bottom:8px;">Transparent rates.</div>
+  <p class="sec-b">No hidden fees. 2 hour minimum on all bookings. Price shown is per hour — billed in your local currency.</p>
+  <div class="rates">
+    <div class="rc">
+      <div class="rc-r">United States</div>
+      <div class="rc-n">$120</div>
+      <div class="rc-sub">per hour</div>
+      <div class="rc-min">$240 minimum</div>
+    </div>
+    <div class="rc">
+      <div class="rc-r">United Kingdom</div>
+      <div class="rc-n">£90</div>
+      <div class="rc-sub">per hour</div>
+      <div class="rc-min">£180 minimum</div>
+    </div>
+    <div class="rc">
+      <div class="rc-r">UAE / Dubai</div>
+      <div class="rc-n">AED 500</div>
+      <div class="rc-sub">per hour</div>
+      <div class="rc-min">AED 1,000 minimum</div>
+    </div>
+    <div class="rc">
+      <div class="rc-r">South Africa</div>
+      <div class="rc-n">R500</div>
+      <div class="rc-sub">per hour</div>
+      <div class="rc-min">R1,000 minimum</div>
+    </div>
+    <div class="rc">
+      <div class="rc-r">Australia</div>
+      <div class="rc-n">AU$150</div>
+      <div class="rc-sub">per hour</div>
+      <div class="rc-min">AU$300 minimum</div>
+    </div>
+    <div class="rc">
+      <div class="rc-r">Canada</div>
+      <div class="rc-n">CAD 140</div>
+      <div class="rc-sub">per hour</div>
+      <div class="rc-min">CAD 280 minimum</div>
+    </div>
+    <div class="rc">
+      <div class="rc-r">Singapore</div>
+      <div class="rc-n">SGD 160</div>
+      <div class="rc-sub">per hour</div>
+      <div class="rc-min">SGD 320 minimum</div>
+    </div>
+    <div class="rc">
+      <div class="rc-r">Europe</div>
+      <div class="rc-n">€110</div>
+      <div class="rc-sub">per hour</div>
+      <div class="rc-min">€220 minimum</div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING FORM -->
+<section class="sec" id="book" style="background:#0a0a0a;">
+  <div class="eye">Book a Havoc</div>
+  <div class="book-wrap">
+    <div class="book-left">
+      <div class="book-h">Ready when<br>you are.</div>
+      <div class="book-sub">Fill in your booking details and we'll confirm your Havoc within the hour. <strong>Available 24/7.</strong> For urgent bookings, WhatsApp us directly.</div>
+      <div class="trust">
+        <div class="trust-item">
+          <i class="ti ti-shield-check"></i>
+          <div class="trust-text"><strong>Every Havoc is vetted</strong>Background checked, interviewed, and approved by us personally.</div>
+        </div>
+        <div class="trust-item">
+          <i class="ti ti-clock"></i>
+          <div class="trust-text"><strong>Confirmed within the hour</strong>We match and confirm your booking fast — no waiting around.</div>
+        </div>
+        <div class="trust-item">
+          <i class="ti ti-lock"></i>
+          <div class="trust-text"><strong>Card saved, not charged</strong>We save your card details to confirm the booking. You are only charged when your Havoc checks in on arrival.</div>
+        </div>
+        <div class="trust-item">
+          <i class="ti ti-map-pin"></i>
+          <div class="trust-text"><strong>Available globally</strong>Joburg, Pretoria, Dubai, London, New York and expanding fast.</div>
+        </div>
+      </div>
+    </div>
+    <div class="book-right">
+      <form action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="7f5a8b5e-db68-45a0-80d8-aea6fa64632a">
+        <input type="hidden" name="subject" value="New HAVOC Booking Request">
+        <input type="hidden" name="redirect" value="https://havocpresence.com/booked.html">
+        <div class="field"><label>Your name</label><input type="text" name="name" placeholder="First and last name" required></div>
+        <div class="field"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required></div>
+        <div class="field"><label>Phone / WhatsApp</label><input type="tel" name="phone" placeholder="+27 or international" required></div>
+        <div class="field"><label>Booking type</label>
+          <select name="booking_type" required>
+            <option value="" disabled selected>Select type</option>
+            <option>Video shoot</option>
+            <option>Door work / event</option>
+            <option>Accompaniment</option>
+            <option>VIP / corporate</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field"><label>City / Location</label><input type="text" name="location" placeholder="City and venue or area" required></div>
+        <div class="frow">
+          <div class="field"><label>Date</label><input type="date" name="date" required></div>
+          <div class="field"><label>Start time</label><input type="time" name="time" required></div>
+        </div>
+        <div class="field"><label>Duration (hours)</label>
+          <select name="duration" required>
+            <option value="" disabled selected>Select duration</option>
+            <option value="2">2 hours (minimum)</option>
+            <option value="3">3 hours</option>
+            <option value="4">4 hours</option>
+            <option value="5">5 hours</option>
+            <option value="6">6 hours</option>
+            <option value="8">8 hours (full day)</option>
+            <option value="custom">Custom — specify below</option>
+          </select>
+        </div>
+        <div class="field"><label>Number of Havocs needed</label>
+          <select name="quantity" required>
+            <option value="" disabled selected>How many?</option>
+            <option value="1">1 Havoc</option>
+            <option value="2">2 Havocs</option>
+            <option value="3">3 Havocs</option>
+            <option value="4">4 Havocs</option>
+            <option value="5+">5 or more</option>
+          </select>
+        </div>
+        <div class="field"><label>Additional details</label><textarea name="details" placeholder="Dress code, specific requirements, any other info..."></textarea></div>
+        <button type="submit" class="submit-btn">Submit Booking Request</button>
+        <div class="fnote">Your card is saved but not charged. Payment is only processed when your Havoc checks in on arrival. We confirm within the hour.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" id="faq">
+  <div class="eye">FAQ</div>
+  <div class="sec-h" style="margin-bottom:32px;">Common questions.</div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">What exactly is a Havoc? <i class="ti ti-plus"></i></div>
+      <div class="faq-a">A Havoc is a vetted, professional individual hired for their presence — not security. They are commanding, composed, and professional. Think of them as presence on demand — someone whose size and presentation holds a room without saying a word.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How quickly can I get a Havoc? <i class="ti ti-plus"></i></div>
+      <div class="faq-a">For planned bookings we confirm within the hour. For same-day or urgent bookings contact us directly via WhatsApp and we'll do our best to accommodate.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I specify how they dress? <i class="ti ti-plus"></i></div>
+      <div class="faq-a">Yes — you tell us the dress code and your Havoc will arrive dressed exactly as requested. Suit, all black, smart casual — whatever the occasion requires.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Are Havocs trained in security? <i class="ti ti-plus"></i></div>
+      <div class="faq-a">HAVOC is a presence platform, not a security company. Havocs are not trained security personnel and should not be treated as such. They are professional, composed individuals hired for their presence and demeanour. For licensed security services, please use a registered security provider.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What is the cancellation policy? <i class="ti ti-plus"></i></div>
+      <div class="faq-a">Cancellations made more than 24 hours before the booking receive a full refund. Cancellations within 24 hours are non-refundable. No-shows are charged in full.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do you operate outside South Africa? <i class="ti ti-plus"></i></div>
+      <div class="faq-a">Yes — we are available in multiple markets including UAE, USA, UK, Australia, Singapore, Canada, and Europe. Submit a booking request and we'll confirm availability in your city.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ti">Johannesburg</span><span class="ti">Dubai</span><span class="ti">Miami</span><span class="ti">London</span><span class="ti">Sydney</span><span class="ti">Singapore</span><span class="ti">New York</span><span class="ti">Pretoria</span><span class="ti">Toronto</span><span class="ti">Paris</span><span class="ti">Atlanta</span><span class="ti">Los Angeles</span><span class="ti">Johannesburg</span><span class="ti">Dubai</span><span class="ti">Miami</span><span class="ti">London</span><span class="ti">Sydney</span><span class="ti">Singapore</span><span class="ti">New York</span><span class="ti">Pretoria</span><span class="ti">Toronto</span><span class="ti">Paris</span><span class="ti">Atlanta</span><span class="ti">Los Angeles</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="fl">HAVOC</div>
+  <div class="foot-links">
+    <a href="/index.html">Join as a Havoc</a>
+    <a href="mailto:info@havocpresence.com">info@havocpresence.com</a>
+    <a href="#">@havocpresence</a>
+  </div>
+  <div class="fc">© 2026 Security Spot (Pty) Ltd</div>
+</footer>
+
+<script>
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.querySelector('.faq-q').addEventListener('click', () => {
+    item.classList.toggle('open');
+  });
+});
+</script>
+
+</body>
+</html>
