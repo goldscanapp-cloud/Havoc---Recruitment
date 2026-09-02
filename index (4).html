@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAVOC — Join the Roster</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 48px; border-bottom: 1px solid rgba(255,255,255,0.07); position: sticky; top: 0; background: rgba(8,8,8,0.95); backdrop-filter: blur(12px); z-index: 100; }
+.nav-logo { font-size: 28px; font-weight: 800; letter-spacing: 0.25em; color: #fff; border: 2px solid #fff; padding: 4px 14px; line-height: 1; }
+.nav-links { display: flex; gap: 32px; }
+.nav-links a { font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 500; text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: #fff; }
+.nav-btn { background: #fff; color: #080808; font-size: 11px; font-weight: 700; padding: 9px 18px; letter-spacing: 0.07em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
+.nav-btn:hover { opacity: 0.85; }
+
+.hero { padding: 64px 48px 48px; }
+.badge { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.04em; margin-bottom: 24px; }
+.badge-dot { width: 6px; height: 6px; background: rgba(255,255,255,0.5); border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.h1 { font-size: clamp(60px,9vw,110px); font-weight: 800; line-height: 0.88; letter-spacing: -0.04em; color: #fff; }
+.h1o { display: block; font-size: clamp(60px,9vw,110px); font-weight: 800; line-height: 0.88; letter-spacing: -0.04em; -webkit-text-stroke: 2px rgba(255,255,255,0.85); color: transparent; margin-bottom: 20px; }
+.slogan { font-size: 14px; color: rgba(255,255,255,0.4); letter-spacing: 0.04em; margin-bottom: 32px; font-weight: 400; }
+.hero-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.hero-sub { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.7; max-width: 360px; }
+.hero-sub strong { color: #fff; font-weight: 600; }
+.hero-btns { display: flex; align-items: center; gap: 16px; }
+.btn-p { background: #fff; color: #080808; font-size: 11px; font-weight: 700; padding: 13px 26px; letter-spacing: 0.07em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; display: inline-block; }
+.btn-p:hover { opacity: 0.85; }
+.btn-g { font-size: 12px; color: rgba(255,255,255,0.4); text-decoration: none; }
+.btn-g:hover { color: rgba(255,255,255,0.7); }
+
+.rates { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,0.06); border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
+.rc { background: #080808; padding: 28px 32px; }
+.rc-r { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 10px; font-weight: 600; }
+.rc-n { font-size: 38px; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1; margin-bottom: 6px; }
+.rc-k { font-size: 12px; color: rgba(255,255,255,0.4); }
+
+.sec { padding: 48px 48px; border-top: 1px solid rgba(255,255,255,0.05); }
+.eye { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 24px; }
+.cards4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,0.05); }
+.card { background: #0c0c0c; padding: 24px 22px; }
+.card i { font-size: 20px; color: rgba(255,255,255,0.5); }
+.card-t { font-size: 14px; font-weight: 700; color: #fff; margin: 12px 0 7px; }
+.card-b { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.65; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.sec-h { font-size: clamp(36px,4vw,52px); font-weight: 800; line-height: 0.9; letter-spacing: -0.03em; margin-bottom: 18px; color: #fff; }
+.sec-b { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.75; margin-bottom: 24px; }
+.sec-b strong { color: #fff; font-weight: 600; }
+.quote { border-left: 2px solid rgba(255,255,255,0.22); padding-left: 18px; font-size: 16px; font-weight: 700; color: rgba(255,255,255,0.65); line-height: 1.4; }
+.trait { display: flex; gap: 14px; padding: 18px; background: #0e0e0e; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 2px; }
+.trait i { font-size: 17px; color: rgba(255,255,255,0.45); flex-shrink: 0; margin-top: 2px; }
+.trait-t { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: #fff; }
+.trait-b { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.55; }
+
+.rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 32px; }
+.col-l { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 18px; }
+.col-l.a { color: rgba(255,255,255,0.55); }
+.col-l.n { color: rgba(255,80,80,0.9); }
+.rule { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; align-items: flex-start; }
+.rule:last-child { border-bottom: none; }
+.dg { width: 5px; height: 5px; background: rgba(255,255,255,0.5); border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+.dr { width: 5px; height: 5px; background: rgba(255,80,80,0.9); border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+.rule strong { color: #fff; font-weight: 600; }
+.rule em { font-style: normal; color: rgba(255,255,255,0.3); }
+
+.steps3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(255,255,255,0.05); }
+.step { background: #0a0a0a; padding: 32px 28px; }
+.step-n { font-size: 44px; font-weight: 800; color: rgba(255,255,255,0.08); letter-spacing: -0.04em; margin-bottom: 16px; }
+.step-t { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+.step-b { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.65; }
+
+.cta-dark { padding: 56px 48px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; background: #0d0d0d; }
+.cta-h { font-size: clamp(36px,4vw,52px); font-weight: 800; color: #fff; line-height: 0.9; letter-spacing: -0.03em; margin-bottom: 12px; }
+.cta-s { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.65; max-width: 360px; margin-bottom: 28px; }
+.cta-n { font-size: clamp(72px,12vw,120px); font-weight: 800; color: #fff; line-height: 0.85; letter-spacing: -0.05em; }
+.cta-nl { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 6px; text-align: right; }
+
+.form-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.form-h { font-size: clamp(32px,3.5vw,48px); font-weight: 800; line-height: 0.9; letter-spacing: -0.03em; margin-bottom: 14px; color: #fff; }
+.form-sub { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.7; margin-top: 16px; }
+.form-sub strong { color: rgba(255,255,255,0.8); font-weight: 600; }
+.field { margin-bottom: 12px; }
+.field label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 7px; }
+.field input, .field select { width: 100%; background: #141414; border: 1px solid rgba(255,255,255,0.1); color: #fff; font-family: 'Inter',sans-serif; font-size: 13px; padding: 12px 14px; outline: none; -webkit-appearance: none; border-radius: 0; transition: border-color 0.2s; }
+.field input:focus, .field select:focus { border-color: rgba(255,255,255,0.35); }
+.field input::placeholder { color: rgba(255,255,255,0.2); }
+.field select option { background: #141414; }
+.frow { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.upload { border: 1px dashed rgba(255,255,255,0.12); background: #111; padding: 28px; text-align: center; margin-bottom: 12px; cursor: pointer; transition: border-color 0.2s; }
+.upload:hover { border-color: rgba(255,255,255,0.3); }
+.upload i { font-size: 22px; color: rgba(255,255,255,0.3); }
+.upload-l { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); margin-top: 10px; margin-bottom: 3px; }
+.upload-h { font-size: 11px; color: rgba(255,255,255,0.28); }
+.sub-btn { width: 100%; background: #fff; color: #080808; font-family: 'Inter',sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.08em; padding: 15px; border: none; cursor: pointer; text-transform: uppercase; transition: opacity 0.2s; }
+.sub-btn:hover { opacity: 0.88; }
+.fnote { font-size: 11px; color: rgba(255,255,255,0.22); text-align: center; margin-top: 12px; line-height: 1.6; }
+
+.ticker { border-top: 1px solid rgba(255,255,255,0.08); padding: 16px 0; overflow: hidden; background: #080808; }
+.ticker-inner { display: flex; animation: tick 30s linear infinite; width: max-content; }
+@keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+.ti { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: rgba(255,255,255,0.5); text-transform: uppercase; padding: 0 28px; white-space: nowrap; }
+.ti::after { content: '·'; margin-left: 28px; color: rgba(255,255,255,0.2); }
+
+.foot { border-top: 1px solid rgba(255,255,255,0.07); padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; }
+.fl { font-size: 17px; font-weight: 800; letter-spacing: 0.25em; color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.2); padding: 4px 12px; }
+.fc { font-size: 11px; color: rgba(255,255,255,0.28); }
+
+@media (max-width: 768px) {
+  .nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 48px 20px 36px; }
+  .rates { grid-template-columns: repeat(2,1fr); }
+  .sec { padding: 36px 20px; }
+  .cards4 { grid-template-columns: repeat(2,1fr); }
+  .two-col { grid-template-columns: 1fr; gap: 32px; }
+  .rules-grid { grid-template-columns: 1fr; }
+  .steps3 { grid-template-columns: 1fr; }
+  .cta-dark { padding: 40px 20px; }
+  .form-wrap { grid-template-columns: 1fr; gap: 32px; }
+  .foot { padding: 20px; flex-direction: column; gap: 12px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">HAVOC</div>
+  <div class="nav-links">
+    <a href="#what">What is a Havoc</a>
+    <a href="#standard">What's expected</a>
+    <a href="#rates">Rates</a>
+    <a href="#how">How it works</a>
+  </div>
+  <a href="#apply" class="nav-btn">Apply now</a>
+</nav>
+
+<section class="hero">
+  <div class="badge"><span class="badge-dot"></span>Now recruiting worldwide</div>
+  <div class="h1">Big built.</div>
+  <span class="h1o">Get paid.</span>
+  <div class="slogan">The presence you need. When you need it.</div>
+  <div class="hero-row">
+    <div class="hero-sub">HAVOC connects <strong>commanding individuals</strong> with clients who need presence — events, shoots, door work, and more. Pick up gigs in your city. <strong>Get paid same day.</strong></div>
+    <div class="hero-btns">
+      <a href="#apply" class="btn-p">Apply to be a Havoc</a>
+      <a href="#how" class="btn-g">See how it works ↓</a>
+    </div>
+  </div>
+</section>
+
+<div class="rates" id="rates">
+  <div class="rc"><div class="rc-r">South Africa</div><div class="rc-n">R500</div><div class="rc-k">You keep R400/hr</div></div>
+  <div class="rc"><div class="rc-r">Dubai</div><div class="rc-n">AED 500</div><div class="rc-k">You keep AED 400/hr</div></div>
+  <div class="rc"><div class="rc-r">USA</div><div class="rc-n">$120</div><div class="rc-k">You keep $96/hr</div></div>
+  <div class="rc"><div class="rc-r">UK</div><div class="rc-n">£90</div><div class="rc-k">You keep £72/hr</div></div>
+</div>
+
+<section class="sec">
+  <div class="eye">What you'll be booked for</div>
+  <div class="cards4">
+    <div class="card"><i class="ti ti-video"></i><div class="card-t">Video shoots</div><div class="card-b">Artists and creators need presence on set. You show up, you hold the room.</div></div>
+    <div class="card"><i class="ti ti-door"></i><div class="card-t">Door work</div><div class="card-b">Events, clubs, private functions. Professional door presence booked in minutes.</div></div>
+    <div class="card"><i class="ti ti-users"></i><div class="card-t">Accompaniment</div><div class="card-b">Clients who need someone commanding by their side — meetings, nights out, appearances.</div></div>
+    <div class="card"><i class="ti ti-crown"></i><div class="card-t">VIP & events</div><div class="card-b">Galas, corporate events, launches. Suited, sharp, and ready.</div></div>
+  </div>
+</section>
+
+<section class="sec" id="what" style="background:#0a0a0a;">
+  <div class="eye">What is a Havoc</div>
+  <div class="two-col">
+    <div>
+      <div class="sec-h">Not a guard.<br>A presence.</div>
+      <div class="sec-b">A Havoc is not a security guard. Not a fighter. A Havoc is someone whose <strong>size, composure, and presentation</strong> commands a room without saying a word. The best Havoc is the one where nothing happens — because their presence prevented it.</div>
+      <div class="quote">"Show up. Look sharp.<br>Command the room. Go home."</div>
+    </div>
+    <div>
+      <div class="trait"><i class="ti ti-barbell"></i><div><div class="trait-t">Size and presence</div><div class="trait-b">Large build, commanding stature. When you walk in, people notice. That's the job.</div></div></div>
+      <div class="trait"><i class="ti ti-brain"></i><div><div class="trait-t">Cool head</div><div class="trait-b">Things happen. You don't react. Calm, composed, professional — always.</div></div></div>
+      <div class="trait"><i class="ti ti-shirt"></i><div><div class="trait-t">Look the part</div><div class="trait-b">Clients tell you how to dress. You show up looking exactly right — every time.</div></div></div>
+      <div class="trait"><i class="ti ti-clock"></i><div><div class="trait-t">On time, every time</div><div class="trait-b">No excuses. No late arrivals. Punctuality is non-negotiable on this platform.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="standard">
+  <div class="eye">The standard</div>
+  <div class="sec-h">Simple rules.<br>No exceptions.</div>
+  <div class="rules-grid">
+    <div>
+      <div class="col-l a">✓ &nbsp;Always</div>
+      <div class="rule"><span class="dg"></span><span><strong>Arrive on time</strong> — <em>every single booking</em></span></div>
+      <div class="rule"><span class="dg"></span><span><strong>Dress exactly</strong> as the client requests</span></div>
+      <div class="rule"><span class="dg"></span><span><strong>Check in</strong> through the app when you arrive</span></div>
+      <div class="rule"><span class="dg"></span><span><strong>Stay calm</strong> no matter what happens around you</span></div>
+      <div class="rule"><span class="dg"></span><span><strong>Keep all client information</strong> confidential</span></div>
+      <div class="rule"><span class="dg"></span><span><strong>De-escalate</strong> — remove yourself if things escalate</span></div>
+    </div>
+    <div>
+      <div class="col-l n">✗ &nbsp;Never</div>
+      <div class="rule"><span class="dr"></span><span><strong>Get physical</strong> — <em>under any circumstances</em></span></div>
+      <div class="rule"><span class="dr"></span><span><strong>Accept payment</strong> outside the app</span></div>
+      <div class="rule"><span class="dr"></span><span><strong>Share your personal contact</strong> with clients</span></div>
+      <div class="rule"><span class="dr"></span><span><strong>Arrive under the influence</strong> of anything</span></div>
+      <div class="rule"><span class="dr"></span><span><strong>Cancel within 2 hours</strong> of a booking</span></div>
+      <div class="rule"><span class="dr"></span><span><strong>Be a no-show</strong> — <em>one strike and you're suspended</em></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="how" style="background:#0a0a0a;">
+  <div class="eye">How it works</div>
+  <div class="sec-h" style="margin-bottom:32px;">Three steps.<br>That's it.</div>
+  <div class="steps3">
+    <div class="step"><div class="step-n">01</div><div class="step-t">Apply and get approved</div><div class="step-b">Fill in your details, upload a full body photo. We review personally. Approved within 24 hours.</div></div>
+    <div class="step"><div class="step-n">02</div><div class="step-t">Accept gigs near you</div><div class="step-b">Go live in the app. Bookings come to you. Accept what works. Decline what doesn't. Your call.</div></div>
+    <div class="step"><div class="step-n">03</div><div class="step-t">Show up. Get paid.</div><div class="step-b">Complete the booking. Payment hits your account the same day. Plus 100% of any tips.</div></div>
+  </div>
+</section>
+
+<div class="cta-dark">
+  <div>
+    <div class="cta-h">Complete a job.<br>Get paid.</div>
+    <div class="cta-s">Same day, every booking. No chasing, no invoicing, no agencies taking half. Plus 100% of tips on top.</div>
+    <a href="#apply" class="btn-p">Apply to be a Havoc</a>
+  </div>
+  <div>
+    <div class="cta-n">80%</div>
+    <div class="cta-nl">of every booking goes to you</div>
+  </div>
+</div>
+
+<section class="sec" id="apply">
+  <div class="eye">Apply now</div>
+  <form action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="7f5a8b5e-db68-45a0-80d8-aea6fa64632a">
+      <input type="hidden" name="subject" value="New HAVOC Application">
+      <input type="hidden" name="redirect" value="https://havocpresence.com/thanks.html">
+      <div class="form-wrap">
+    <div>
+      <div class="form-h">Think you've<br>got what it takes?</div>
+      <div class="form-sub">Fill in your details and upload a full body photo. <strong>We review every application personally.</strong> First to apply in your city get first bookings when we launch there.</div>
+    </div>
+    <div>
+      <div class="field"><label>Full name</label><input type="text" placeholder="First and last name"></div>
+      <div class="field"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+      <div class="field"><label>Phone number</label><input type="tel" placeholder="+27 or international"></div>
+      <div class="field"><label>Your city</label><input type="text" placeholder="City"></div>
+      <div class="frow">
+        <div class="field"><label>Height</label><input type="text" placeholder="e.g. 188cm"></div>
+        <div class="field"><label>Weight</label><input type="text" placeholder="e.g. 100kg"></div>
+      </div>
+      <div class="field"><label>Build type</label><select><option value="" disabled selected>Select your build</option><option>Athletic / muscular</option><option>Large / heavyweight</option><option>Tall and lean</option></select></div>
+      <div class="field"><label>Full body photo</label>
+        <div class="upload"><i class="ti ti-camera"></i><div class="upload-l">Upload your photo</div><div class="upload-h">Full body, clear photo. Required.</div></div>
+      </div>
+      <button type="submit" class="sub-btn">Submit my application</button>
+      <div class="fnote">We review every application personally. You'll hear from us within 24 hours.</div>
+    </div>
+  </div>
+</form>
+</section>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ti">Johannesburg</span><span class="ti">Get paid</span><span class="ti">Miami</span><span class="ti">Singapore</span><span class="ti">Sydney</span><span class="ti">Paris</span><span class="ti">Toronto</span><span class="ti">London</span><span class="ti">New York</span><span class="ti">Dubai</span><span class="ti">Atlanta</span><span class="ti">Pretoria</span><span class="ti">Los Angeles</span><span class="ti">Johannesburg</span><span class="ti">Get paid</span><span class="ti">Miami</span><span class="ti">Singapore</span><span class="ti">Sydney</span><span class="ti">Paris</span><span class="ti">Toronto</span><span class="ti">London</span><span class="ti">New York</span><span class="ti">Dubai</span><span class="ti">Atlanta</span><span class="ti">Pretoria</span><span class="ti">Los Angeles</span>
+  </div>
+</div>
+
+<footer class="foot">
+  <div class="fl">HAVOC</div>
+  <div class="fc">© 2026 Security Spot (Pty) Ltd · havocpresence.com · info@havocpresence.com</div>
+  <div class="fc">@havocpresence</div>
+</footer>
+
+</body>
+</html>
