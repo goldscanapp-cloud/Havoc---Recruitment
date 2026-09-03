@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAVOC — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 32px; border-bottom: 1px solid rgba(255,255,255,0.07); position: sticky; top: 0; background: rgba(8,8,8,0.95); backdrop-filter: blur(12px); z-index: 100; }
+.nav-logo { font-size: 20px; font-weight: 800; letter-spacing: 0.25em; color: #fff; border: 2px solid #fff; padding: 3px 10px; line-height: 1; text-decoration: none; }
+.nav-badge { background: rgba(255,60,60,0.15); color: rgba(255,100,100,0.9); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; padding: 3px 8px; text-transform: uppercase; margin-left: 10px; }
+.nav-right { display: flex; align-items: center; gap: 16px; }
+.nav-user { font-size: 12px; color: rgba(255,255,255,0.45); }
+.nav-signout { font-size: 11px; color: rgba(255,255,255,0.3); cursor: pointer; background: none; border: none; font-family: 'Inter', sans-serif; }
+
+.sidebar { position: fixed; left: 0; top: 57px; bottom: 0; width: 220px; border-right: 1px solid rgba(255,255,255,0.06); background: #080808; padding: 24px 0; }
+.nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 24px; font-size: 13px; color: rgba(255,255,255,0.45); cursor: pointer; transition: all 0.2s; text-decoration: none; position: relative; }
+.nav-item:hover { color: #fff; background: rgba(255,255,255,0.04); }
+.nav-item.active { color: #fff; background: rgba(255,255,255,0.07); border-right: 2px solid #fff; }
+.nav-item i { font-size: 17px; }
+.nav-badge-count { background: rgba(255,200,0,0.8); color: #080808; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 10px; margin-left: auto; }
+
+.main { margin-left: 220px; padding: 40px; }
+.page { display: none; }
+.page.active { display: block; }
+.page-title { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px; }
+.page-sub { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 32px; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; background: rgba(255,255,255,0.06); margin-bottom: 32px; }
+.stat-card { background: #0e0e0e; padding: 24px; }
+.stat-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 8px; }
+.stat-value { font-size: 30px; font-weight: 800; letter-spacing: -0.03em; color: #fff; margin-bottom: 4px; }
+.stat-sub { font-size: 11px; color: rgba(255,255,255,0.3); }
+
+.table-wrap { background: #0e0e0e; border: 1px solid rgba(255,255,255,0.06); overflow: hidden; }
+.table-header { padding: 16px 24px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+.table-title { font-size: 13px; font-weight: 700; }
+.table-actions { display: flex; gap: 8px; }
+.filter-btn { background: #141414; border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); font-family: 'Inter', sans-serif; font-size: 11px; padding: 6px 12px; cursor: pointer; }
+.filter-btn.active { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+
+table { width: 100%; border-collapse: collapse; }
+th { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.25); padding: 12px 24px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+td { font-size: 12px; color: rgba(255,255,255,0.7); padding: 14px 24px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+
+.status-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; }
+.status-pending { background: rgba(255,200,0,0.1); color: rgba(255,200,0,0.9); }
+.status-confirmed { background: rgba(60,255,120,0.1); color: rgba(60,255,120,0.9); }
+.status-completed { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.5); }
+.status-cancelled { background: rgba(255,60,60,0.1); color: rgba(255,100,100,0.9); }
+.status-active { background: rgba(60,255,120,0.1); color: rgba(60,255,120,0.9); }
+.status-pending-approval { background: rgba(255,200,0,0.1); color: rgba(255,200,0,0.9); }
+.status-suspended { background: rgba(255,60,60,0.1); color: rgba(255,100,100,0.9); }
+
+.action-btn { background: none; border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); font-family: 'Inter', sans-serif; font-size: 11px; padding: 5px 10px; cursor: pointer; margin-right: 4px; transition: all 0.2s; }
+.action-btn:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
+.action-btn.primary { background: #fff; color: #080808; border-color: #fff; font-weight: 600; }
+.action-btn.danger { border-color: rgba(255,60,60,0.3); color: rgba(255,100,100,0.8); }
+.action-btn.danger:hover { background: rgba(255,60,60,0.1); border-color: rgba(255,60,60,0.5); }
+.action-btn.success { border-color: rgba(60,255,120,0.3); color: rgba(60,255,120,0.8); }
+.action-btn.success:hover { background: rgba(60,255,120,0.08); }
+
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; display: none; align-items: center; justify-content: center; }
+.modal-overlay.show { display: flex; }
+.modal { background: #0e0e0e; border: 1px solid rgba(255,255,255,0.1); padding: 36px; width: 100%; max-width: 520px; max-height: 80vh; overflow-y: auto; }
+.modal-title { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+.modal-sub { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 24px; }
+.modal-field { margin-bottom: 14px; }
+.modal-field label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 6px; }
+.modal-field select, .modal-field input { width: 100%; background: #141414; border: 1px solid rgba(255,255,255,0.1); color: #fff; font-family: 'Inter', sans-serif; font-size: 13px; padding: 11px 12px; outline: none; border-radius: 0; -webkit-appearance: none; }
+.modal-actions { display: flex; gap: 8px; margin-top: 24px; }
+.modal-btn { flex: 1; padding: 13px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; border: none; }
+.modal-btn.primary { background: #fff; color: #080808; }
+.modal-btn.secondary { background: transparent; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.1); }
+
+.havoc-card { background: #0e0e0e; border: 1px solid rgba(255,255,255,0.06); padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
+.havoc-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.havoc-meta { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+
+.empty-state { text-align: center; padding: 60px; color: rgba(255,255,255,0.3); font-size: 13px; }
+
+.search-input { background: #141414; border: 1px solid rgba(255,255,255,0.08); color: #fff; font-family: 'Inter', sans-serif; font-size: 12px; padding: 8px 12px; outline: none; width: 200px; }
+.search-input::placeholder { color: rgba(255,255,255,0.2); }
+
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 20px; }
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div style="display:flex;align-items:center;">
+    <a href="/" class="nav-logo">HAVOC</a>
+    <span class="nav-badge">Admin</span>
+  </div>
+  <div class="nav-right">
+    <span class="nav-user" id="admin-user">Loading...</span>
+    <button class="nav-signout" onclick="signOut()">Sign out</button>
+  </div>
+</nav>
+
+<div class="sidebar">
+  <a class="nav-item active" onclick="showPage('overview')" href="#">
+    <i class="ti ti-dashboard"></i> Overview
+  </a>
+  <a class="nav-item" onclick="showPage('bookings')" href="#">
+    <i class="ti ti-calendar"></i> Bookings
+    <span class="nav-badge-count" id="badge-bookings" style="display:none">0</span>
+  </a>
+  <a class="nav-item" onclick="showPage('havocs')" href="#">
+    <i class="ti ti-users"></i> Havocs
+    <span class="nav-badge-count" id="badge-havocs" style="display:none">0</span>
+  </a>
+  <a class="nav-item" onclick="showPage('clients')" href="#">
+    <i class="ti ti-user"></i> Clients
+  </a>
+  <a class="nav-item" onclick="showPage('applications')" href="#">
+    <i class="ti ti-clipboard-list"></i> Applications
+    <span class="nav-badge-count" id="badge-apps" style="display:none">0</span>
+  </a>
+  <a class="nav-item" onclick="showPage('earnings')" href="#">
+    <i class="ti ti-currency-dollar"></i> Earnings
+  </a>
+</div>
+
+<div class="main">
+
+  <!-- OVERVIEW -->
+  <div class="page active" id="page-overview">
+    <div class="page-title">Overview.</div>
+    <div class="page-sub">Platform summary at a glance.</div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-label">Total bookings</div><div class="stat-value" id="stat-bookings">0</div><div class="stat-sub">All time</div></div>
+      <div class="stat-card"><div class="stat-label">Pending</div><div class="stat-value" id="stat-pending">0</div><div class="stat-sub">Needs attention</div></div>
+      <div class="stat-card"><div class="stat-label">Active Havocs</div><div class="stat-value" id="stat-havocs">0</div><div class="stat-sub">Approved</div></div>
+      <div class="stat-card"><div class="stat-label">Total clients</div><div class="stat-value" id="stat-clients">0</div><div class="stat-sub">Registered</div></div>
+    </div>
+    <div class="table-wrap">
+      <div class="table-header"><div class="table-title">Recent bookings</div></div>
+      <table>
+        <thead><tr><th>Type</th><th>Client</th><th>Location</th><th>Date</th><th>Status</th><th>Value</th><th>Action</th></tr></thead>
+        <tbody id="recent-bookings"><tr><td colspan="7" class="empty-state">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- BOOKINGS -->
+  <div class="page" id="page-bookings">
+    <div class="page-title">Bookings.</div>
+    <div class="page-sub">All booking requests and their status.</div>
+    <div class="table-wrap">
+      <div class="table-header">
+        <div class="table-title">All bookings</div>
+        <div class="table-actions">
+          <button class="filter-btn active" onclick="filterBookings('all', this)">All</button>
+          <button class="filter-btn" onclick="filterBookings('pending', this)">Pending</button>
+          <button class="filter-btn" onclick="filterBookings('confirmed', this)">Confirmed</button>
+          <button class="filter-btn" onclick="filterBookings('completed', this)">Completed</button>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Type</th><th>Client</th><th>Location</th><th>Date/Time</th><th>Duration</th><th>Havoc</th><th>Status</th><th>Value</th><th>Actions</th></tr></thead>
+        <tbody id="all-bookings"><tr><td colspan="9" class="empty-state">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- HAVOCS -->
+  <div class="page" id="page-havocs">
+    <div class="page-title">Havocs.</div>
+    <div class="page-sub">All verified and pending Havocs.</div>
+    <div class="table-wrap">
+      <div class="table-header">
+        <div class="table-title">All Havocs</div>
+        <div class="table-actions">
+          <button class="filter-btn active" onclick="filterHavocs('all', this)">All</button>
+          <button class="filter-btn" onclick="filterHavocs('active', this)">Active</button>
+          <button class="filter-btn" onclick="filterHavocs('pending', this)">Pending</button>
+          <button class="filter-btn" onclick="filterHavocs('suspended', this)">Suspended</button>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Name</th><th>Email</th><th>City</th><th>Build</th><th>Status</th><th>Online</th><th>Bookings</th><th>Actions</th></tr></thead>
+        <tbody id="all-havocs"><tr><td colspan="8" class="empty-state">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CLIENTS -->
+  <div class="page" id="page-clients">
+    <div class="page-title">Clients.</div>
+    <div class="page-sub">All registered clients.</div>
+    <div class="table-wrap">
+      <div class="table-header"><div class="table-title">All clients</div></div>
+      <table>
+        <thead><tr><th>Name</th><th>Email</th><th>Joined</th><th>Bookings</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="all-clients"><tr><td colspan="6" class="empty-state">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- APPLICATIONS -->
+  <div class="page" id="page-applications">
+    <div class="page-title">Applications.</div>
+    <div class="page-sub">Pending Havoc applications to review.</div>
+    <div id="applications-list"></div>
+  </div>
+
+  <!-- EARNINGS -->
+  <div class="page" id="page-earnings">
+    <div class="page-title">Earnings.</div>
+    <div class="page-sub">Platform revenue and payouts.</div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-label">Total revenue</div><div class="stat-value" id="earn-total">R0</div><div class="stat-sub">All completed bookings</div></div>
+      <div class="stat-card"><div class="stat-label">Platform (20%)</div><div class="stat-value" id="earn-platform">R0</div><div class="stat-sub">HAVOC cut</div></div>
+      <div class="stat-card"><div class="stat-label">Havoc payouts (80%)</div><div class="stat-value" id="earn-havocs">R0</div><div class="stat-sub">Paid to Havocs</div></div>
+      <div class="stat-card"><div class="stat-label">Completed bookings</div><div class="stat-value" id="earn-count">0</div><div class="stat-sub">This month</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ASSIGN HAVOC MODAL -->
+<div class="modal-overlay" id="assign-modal">
+  <div class="modal">
+    <div class="modal-title">Assign a Havoc</div>
+    <div class="modal-sub" id="assign-booking-info">Booking details</div>
+    <input type="hidden" id="assign-booking-id">
+    <div class="modal-field">
+      <label>Select Havoc</label>
+      <select id="assign-havoc-select">
+        <option value="" disabled selected>Choose a Havoc</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn primary" onclick="confirmAssign()">Assign Havoc</button>
+      <button class="modal-btn secondary" onclick="closeModal('assign-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- HAVOC DETAIL MODAL -->
+<div class="modal-overlay" id="havoc-modal">
+  <div class="modal">
+    <div class="modal-title" id="havoc-modal-name">Havoc Name</div>
+    <div class="modal-sub" id="havoc-modal-email">email</div>
+    <div id="havoc-modal-details" style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.8;margin-bottom:20px;"></div>
+    <div class="modal-actions">
+      <button class="modal-btn primary" id="havoc-approve-btn" onclick="approveHavoc()">Approve</button>
+      <button class="modal-btn secondary" style="border-color:rgba(255,60,60,0.3);color:rgba(255,100,100,0.8);" onclick="suspendHavoc()">Suspend</button>
+      <button class="modal-btn secondary" onclick="closeModal('havoc-modal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut as fbSignOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, query, where, orderBy, getDocs, doc, getDoc, updateDoc, serverTimestamp, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCO7B3n_L-hZj9kHAqNTS8gaDFtCRz4ESM",
+  authDomain: "havoc-ae499.firebaseapp.com",
+  projectId: "havoc-ae499",
+  storageBucket: "havoc-ae499.firebasestorage.app",
+  messagingSenderId: "233766682734",
+  appId: "1:233766682734:web:a4cc2c0542333fb21ca67f",
+  measurementId: "G-G20780L1N1"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const ADMIN_EMAILS = ['havocpresence@gmail.com', 'goldscanapp@gmail.com'];
+
+let allBookings = [];
+let allHavocs = [];
+let allClients = [];
+let selectedHavocId = null;
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) { window.location.href = '/auth.html'; return; }
+  if (!ADMIN_EMAILS.includes(user.email)) { window.location.href = '/client-dashboard.html'; return; }
+  document.getElementById('admin-user').textContent = user.email;
+  loadAll();
+});
+
+const loadAll = async () => {
+  await Promise.all([loadBookings(), loadUsers(), loadStats()]);
+};
+
+const loadBookings = async () => {
+  const snap = await getDocs(query(collection(db, 'bookings'), orderBy('createdAt', 'desc')));
+  allBookings = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderBookings(allBookings);
+  renderRecentBookings(allBookings.slice(0, 5));
+  const pending = allBookings.filter(b => b.status === 'pending').length;
+  if (pending > 0) { document.getElementById('badge-bookings').textContent = pending; document.getElementById('badge-bookings').style.display = 'inline-block'; }
+};
+
+const loadUsers = async () => {
+  const snap = await getDocs(collection(db, 'users'));
+  allHavocs = []; allClients = [];
+  snap.docs.forEach(d => {
+    const u = { id: d.id, ...d.data() };
+    if (u.role === 'havoc') allHavocs.push(u);
+    else allClients.push(u);
+  });
+  renderHavocs(allHavocs);
+  renderClients(allClients);
+  renderApplications(allHavocs.filter(h => h.status === 'pending'));
+  const pendingHavocs = allHavocs.filter(h => h.status === 'pending').length;
+  if (pendingHavocs > 0) { document.getElementById('badge-havocs').textContent = pendingHavocs; document.getElementById('badge-havocs').style.display = 'inline-block'; document.getElementById('badge-apps').textContent = pendingHavocs; document.getElementById('badge-apps').style.display = 'inline-block'; }
+};
+
+const loadStats = async () => {
+  document.getElementById('stat-bookings').textContent = allBookings.length;
+  document.getElementById('stat-pending').textContent = allBookings.filter(b => b.status === 'pending').length;
+  document.getElementById('stat-havocs').textContent = allHavocs.filter(h => h.status === 'active').length;
+  document.getElementById('stat-clients').textContent = allClients.length;
+  const completed = allBookings.filter(b => b.status === 'completed');
+  const total = completed.reduce((s, b) => s + (b.estimatedTotal || 0), 0);
+  document.getElementById('earn-total').textContent = `$${total.toLocaleString()}`;
+  document.getElementById('earn-platform').textContent = `$${Math.round(total * 0.2).toLocaleString()}`;
+  document.getElementById('earn-havocs').textContent = `$${Math.round(total * 0.8).toLocaleString()}`;
+  document.getElementById('earn-count').textContent = completed.length;
+};
+
+const currSymbol = (b) => b.currency === 'ZAR' ? 'R' : b.currency === 'AED' ? 'AED ' : b.currency === 'GBP' ? '£' : '$';
+
+const renderRecentBookings = (bookings) => {
+  const el = document.getElementById('recent-bookings');
+  if (!bookings.length) { el.innerHTML = '<tr><td colspan="7" class="empty-state">No bookings yet</td></tr>'; return; }
+  el.innerHTML = bookings.map(b => `
+    <tr>
+      <td>${b.type?.replace('_', ' ') || '—'}</td>
+      <td>${b.clientName || b.clientEmail || '—'}</td>
+      <td>${b.location || '—'}</td>
+      <td>${b.date || '—'}</td>
+      <td><span class="status-badge status-${b.status}">${b.status}</span></td>
+      <td>${currSymbol(b)}${b.estimatedTotal?.toLocaleString() || '—'}</td>
+      <td>${b.status === 'pending' ? `<button class="action-btn primary" onclick="openAssignModal('${b.id}')">Assign</button>` : `<button class="action-btn" onclick="markComplete('${b.id}')">Complete</button>`}</td>
+    </tr>`).join('');
+};
+
+const renderBookings = (bookings) => {
+  const el = document.getElementById('all-bookings');
+  if (!bookings.length) { el.innerHTML = '<tr><td colspan="9" class="empty-state">No bookings</td></tr>'; return; }
+  el.innerHTML = bookings.map(b => `
+    <tr>
+      <td>${b.type?.replace('_', ' ') || '—'}</td>
+      <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${b.clientName || b.clientEmail || '—'}</td>
+      <td>${b.location || '—'}</td>
+      <td>${b.date || '—'} ${b.time || ''}</td>
+      <td>${b.duration || '—'}hrs × ${b.quantity || 1}</td>
+      <td>${b.havocName || '<span style="color:rgba(255,255,255,0.25)">Unassigned</span>'}</td>
+      <td><span class="status-badge status-${b.status}">${b.status}</span></td>
+      <td>${currSymbol(b)}${b.estimatedTotal?.toLocaleString() || '—'}</td>
+      <td>
+        ${b.status === 'pending' ? `<button class="action-btn primary" onclick="openAssignModal('${b.id}')">Assign</button>` : ''}
+        ${b.status === 'confirmed' ? `<button class="action-btn success" onclick="markComplete('${b.id}')">Complete</button>` : ''}
+        ${b.status !== 'cancelled' && b.status !== 'completed' ? `<button class="action-btn danger" onclick="cancelBooking('${b.id}')">Cancel</button>` : ''}
+      </td>
+    </tr>`).join('');
+};
+
+const renderHavocs = (havocs) => {
+  const el = document.getElementById('all-havocs');
+  if (!havocs.length) { el.innerHTML = '<tr><td colspan="8" class="empty-state">No Havocs yet</td></tr>'; return; }
+  el.innerHTML = havocs.map(h => `
+    <tr>
+      <td style="font-weight:600;">${h.name || '—'}</td>
+      <td style="font-size:11px;color:rgba(255,255,255,0.4);">${h.email || '—'}</td>
+      <td>${h.city || '—'}</td>
+      <td>${h.build || h.height || '—'}</td>
+      <td><span class="status-badge status-${h.status === 'pending' ? 'pending-approval' : h.status || 'pending-approval'}">${h.status || 'pending'}</span></td>
+      <td><span style="color:${h.isOnline ? '#4eff91' : 'rgba(255,255,255,0.25)'}">●</span> ${h.isOnline ? 'Online' : 'Offline'}</td>
+      <td>0</td>
+      <td>
+        ${h.status !== 'active' ? `<button class="action-btn success" onclick="approveHavocById('${h.id}')">Approve</button>` : ''}
+        ${h.status === 'active' ? `<button class="action-btn danger" onclick="suspendHavocById('${h.id}')">Suspend</button>` : ''}
+        <button class="action-btn" onclick="viewHavoc('${h.id}')">View</button>
+      </td>
+    </tr>`).join('');
+};
+
+const renderClients = (clients) => {
+  const el = document.getElementById('all-clients');
+  if (!clients.length) { el.innerHTML = '<tr><td colspan="6" class="empty-state">No clients yet</td></tr>'; return; }
+  el.innerHTML = clients.map(c => `
+    <tr>
+      <td style="font-weight:600;">${c.name || '—'}</td>
+      <td style="font-size:11px;color:rgba(255,255,255,0.4);">${c.email || '—'}</td>
+      <td style="font-size:11px;">${c.createdAt?.toDate?.()?.toLocaleDateString() || '—'}</td>
+      <td>0</td>
+      <td><span class="status-badge status-active">${c.status || 'active'}</span></td>
+      <td><button class="action-btn danger" onclick="banClient('${c.id}')">Ban</button></td>
+    </tr>`).join('');
+};
+
+const renderApplications = (pending) => {
+  const el = document.getElementById('applications-list');
+  if (!pending.length) { el.innerHTML = '<div class="empty-state">No pending applications</div>'; return; }
+  el.innerHTML = pending.map(h => `
+    <div class="havoc-card">
+      <div>
+        <div class="havoc-name">${h.name || '—'}</div>
+        <div class="havoc-meta">${h.email} · ${h.city || 'City not set'} · ${h.height || '—'} · ${h.build || '—'}</div>
+      </div>
+      <div>
+        <button class="action-btn success" onclick="approveHavocById('${h.id}')">Approve</button>
+        <button class="action-btn danger" onclick="rejectHavocById('${h.id}')">Reject</button>
+      </div>
+    </div>`).join('');
+};
+
+window.showPage = (p) => {
+  document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  document.getElementById(`page-${p}`).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if (p === 'earnings') loadStats();
+};
+
+window.filterBookings = (status, btn) => {
+  document.querySelectorAll('#page-bookings .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = status === 'all' ? allBookings : allBookings.filter(b => b.status === status);
+  renderBookings(filtered);
+};
+
+window.filterHavocs = (status, btn) => {
+  document.querySelectorAll('#page-havocs .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = status === 'all' ? allHavocs : allHavocs.filter(h => h.status === status);
+  renderHavocs(filtered);
+};
+
+window.openAssignModal = (bookingId) => {
+  const booking = allBookings.find(b => b.id === bookingId);
+  document.getElementById('assign-booking-id').value = bookingId;
+  document.getElementById('assign-booking-info').textContent = `${booking?.type?.replace('_',' ')} · ${booking?.location} · ${booking?.date}`;
+  const select = document.getElementById('assign-havoc-select');
+  const activeHavocs = allHavocs.filter(h => h.status === 'active');
+  select.innerHTML = '<option value="" disabled selected>Choose a Havoc</option>' + activeHavocs.map(h => `<option value="${h.id}">${h.name} — ${h.city || 'No city'}</option>`).join('');
+  document.getElementById('assign-modal').classList.add('show');
+};
+
+window.confirmAssign = async () => {
+  const bookingId = document.getElementById('assign-booking-id').value;
+  const havocId = document.getElementById('assign-havoc-select').value;
+  if (!havocId) return alert('Please select a Havoc.');
+  const havoc = allHavocs.find(h => h.id === havocId);
+  await updateDoc(doc(db, 'bookings', bookingId), {
+    havocId, havocName: havoc?.name || 'Havoc',
+    havocEmail: havoc?.email || '',
+    status: 'confirmed', confirmedAt: serverTimestamp()
+  });
+  closeModal('assign-modal');
+  await loadBookings();
+};
+
+window.markComplete = async (id) => {
+  await updateDoc(doc(db, 'bookings', id), { status: 'completed', completedAt: serverTimestamp() });
+  await loadBookings();
+};
+
+window.cancelBooking = async (id) => {
+  if (!confirm('Cancel this booking?')) return;
+  await updateDoc(doc(db, 'bookings', id), { status: 'cancelled', cancelledAt: serverTimestamp() });
+  await loadBookings();
+};
+
+window.approveHavocById = async (id) => {
+  await updateDoc(doc(db, 'users', id), { status: 'active', approvedAt: serverTimestamp() });
+  await loadUsers();
+};
+
+window.rejectHavocById = async (id) => {
+  if (!confirm('Reject this application?')) return;
+  await updateDoc(doc(db, 'users', id), { status: 'rejected' });
+  await loadUsers();
+};
+
+window.suspendHavocById = async (id) => {
+  if (!confirm('Suspend this Havoc?')) return;
+  await updateDoc(doc(db, 'users', id), { status: 'suspended', isOnline: false });
+  await loadUsers();
+};
+
+window.viewHavoc = (id) => {
+  const h = allHavocs.find(x => x.id === id);
+  if (!h) return;
+  selectedHavocId = id;
+  document.getElementById('havoc-modal-name').textContent = h.name || 'Unknown';
+  document.getElementById('havoc-modal-email').textContent = h.email || '';
+  document.getElementById('havoc-modal-details').innerHTML = `
+    City: ${h.city || '—'}<br>
+    Height: ${h.height || '—'}<br>
+    Weight: ${h.weight || '—'}<br>
+    Build: ${h.build || '—'}<br>
+    Phone: ${h.phone || '—'}<br>
+    Status: ${h.status || 'pending'}<br>
+    Online: ${h.isOnline ? 'Yes' : 'No'}`;
+  document.getElementById('havoc-approve-btn').style.display = h.status === 'active' ? 'none' : 'block';
+  document.getElementById('havoc-modal').classList.add('show');
+};
+
+window.approveHavoc = () => { if (selectedHavocId) { approveHavocById(selectedHavocId); closeModal('havoc-modal'); } };
+window.suspendHavoc = () => { if (selectedHavocId) { suspendHavocById(selectedHavocId); closeModal('havoc-modal'); } };
+window.banClient = async (id) => { if (!confirm('Ban this client?')) return; await updateDoc(doc(db, 'users', id), { status: 'banned' }); await loadUsers(); };
+window.closeModal = (id) => document.getElementById(id).classList.remove('show');
+window.signOut = async () => { await fbSignOut(auth); window.location.href = '/'; };
+</script>
+
+</body>
+</html>

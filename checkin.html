@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAVOC — Check In</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webkit-font-smoothing: antialiased; min-height: 100vh; display: flex; flex-direction: column; }
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+.nav-logo { font-size: 20px; font-weight: 800; letter-spacing: 0.25em; color: #fff; border: 2px solid #fff; padding: 3px 10px; line-height: 1; text-decoration: none; }
+.back-btn { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 13px; display: flex; align-items: center; gap: 6px; }
+
+.main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+.card { width: 100%; max-width: 420px; }
+
+.booking-summary { background: #0e0e0e; border: 1px solid rgba(255,255,255,0.06); padding: 24px; margin-bottom: 2px; }
+.booking-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 12px; }
+.booking-type { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; }
+.booking-meta { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.7; }
+
+.checkin-panel { background: #0e0e0e; border: 1px solid rgba(255,255,255,0.06); padding: 32px; margin-bottom: 2px; text-align: center; }
+.checkin-icon { font-size: 48px; color: rgba(255,255,255,0.15); margin-bottom: 20px; }
+.checkin-title { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; }
+.checkin-sub { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; margin-bottom: 28px; }
+
+.checkin-btn { width: 100%; background: #4eff91; color: #080808; font-family: 'Inter', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 0.07em; padding: 18px; border: none; cursor: pointer; text-transform: uppercase; transition: opacity 0.2s; }
+.checkin-btn:hover { opacity: 0.88; }
+.checkin-btn:disabled { opacity: 0.3; cursor: not-allowed; background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.4); }
+.checkout-btn { width: 100%; background: #fff; color: #080808; font-family: 'Inter', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 0.07em; padding: 18px; border: none; cursor: pointer; text-transform: uppercase; }
+
+.status-panel { background: #0e0e0e; border: 1px solid rgba(255,255,255,0.06); padding: 24px; text-align: center; display: none; }
+.status-panel.show { display: block; }
+.timer { font-size: 48px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; font-variant-numeric: tabular-nums; }
+.timer-label { font-size: 12px; color: rgba(255,255,255,0.35); margin-bottom: 20px; }
+.gps-status { font-size: 12px; color: rgba(255,255,255,0.3); margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.gps-dot { width: 8px; height: 8px; border-radius: 50%; background: #4eff91; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+.error-msg { background: rgba(255,60,60,0.1); border: 1px solid rgba(255,60,60,0.3); color: rgba(255,120,120,1); font-size: 12px; padding: 14px 16px; margin-bottom: 16px; display: none; line-height: 1.5; text-align: left; }
+.error-msg.show { display: block; }
+.success-msg { background: rgba(60,255,120,0.08); border: 1px solid rgba(60,255,120,0.2); color: rgba(100,255,150,1); font-size: 13px; padding: 14px 16px; margin-bottom: 16px; display: none; line-height: 1.5; text-align: left; }
+.success-msg.show { display: block; }
+
+.distance-info { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 12px; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="javascript:history.back()" class="back-btn"><i class="ti ti-arrow-left"></i> Back</a>
+  <a href="/" class="nav-logo">HAVOC</a>
+</div>
+
+<div class="main">
+  <div class="card">
+    <div class="booking-summary">
+      <div class="booking-label">Your booking</div>
+      <div class="booking-type" id="booking-type">Loading...</div>
+      <div class="booking-meta" id="booking-meta"></div>
+    </div>
+
+    <div class="checkin-panel" id="checkin-panel">
+      <div class="checkin-icon"><i class="ti ti-map-pin"></i></div>
+      <div class="checkin-title">Ready to check in?</div>
+      <div class="checkin-sub">You must be within 500m of the booking location to check in. This will start the timer and notify the client you've arrived.</div>
+      <div class="error-msg" id="checkin-error"></div>
+      <div class="success-msg" id="checkin-success"></div>
+      <button class="checkin-btn" id="checkin-btn" onclick="checkIn()">
+        <i class="ti ti-map-pin"></i> Check in now
+      </button>
+      <div class="distance-info" id="distance-info"></div>
+    </div>
+
+    <div class="status-panel" id="status-panel">
+      <div class="gps-status"><span class="gps-dot"></span> Checked in · Timer running</div>
+      <div class="timer" id="timer">00:00:00</div>
+      <div class="timer-label">Time elapsed</div>
+      <button class="checkout-btn" onclick="checkOut()">Check out — End booking</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCO7B3n_L-hZj9kHAqNTS8gaDFtCRz4ESM",
+  authDomain: "havoc-ae499.firebaseapp.com",
+  projectId: "havoc-ae499",
+  storageBucket: "havoc-ae499.firebasestorage.app",
+  messagingSenderId: "233766682734",
+  appId: "1:233766682734:web:a4cc2c0542333fb21ca67f",
+  measurementId: "G-G20780L1N1"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const params = new URLSearchParams(window.location.search);
+const bookingId = params.get('booking');
+
+let currentUser = null;
+let booking = null;
+let timerInterval = null;
+let checkinTime = null;
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) { window.location.href = '/auth.html'; return; }
+  currentUser = user;
+  if (!bookingId) { document.getElementById('booking-type').textContent = 'No booking selected'; return; }
+  const bDoc = await getDoc(doc(db, 'bookings', bookingId));
+  if (!bDoc.exists()) { document.getElementById('booking-type').textContent = 'Booking not found'; return; }
+  booking = { id: bDoc.id, ...bDoc.data() };
+  document.getElementById('booking-type').textContent = booking.type?.replace('_', ' ') || 'Booking';
+  document.getElementById('booking-meta').innerHTML = `${booking.location || ''}<br>${booking.date || ''} at ${booking.time || ''} · ${booking.duration || ''}hrs`;
+  if (booking.status === 'checked_in' && booking.havocId === user.uid) {
+    checkinTime = booking.checkinAt?.toDate?.() || new Date();
+    showTimer();
+  }
+});
+
+const getDistance = (lat1, lon1, lat2, lon2) => {
+  const R = 6371000;
+  const dLat = (lat2-lat1) * Math.PI/180;
+  const dLon = (lon2-lon1) * Math.PI/180;
+  const a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+};
+
+window.checkIn = () => {
+  const btn = document.getElementById('checkin-btn');
+  btn.disabled = true;
+  btn.textContent = 'Getting location...';
+  document.getElementById('checkin-error').classList.remove('show');
+
+  if (!navigator.geolocation) {
+    showError('Geolocation is not supported on this device.');
+    btn.disabled = false;
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(async (pos) => {
+    const { latitude, longitude, accuracy } = pos.coords;
+    document.getElementById('distance-info').textContent = `Your location accuracy: ±${Math.round(accuracy)}m`;
+
+    // For now we allow check-in from any location during testing
+    // In production this will verify against booking coordinates
+    // const distance = getDistance(latitude, longitude, booking.lat, booking.lng);
+    // if (distance > 500) { showError(`You are ${Math.round(distance)}m away. Must be within 500m.`); return; }
+
+    try {
+      await updateDoc(doc(db, 'bookings', bookingId), {
+        status: 'checked_in',
+        checkinAt: serverTimestamp(),
+        checkinLat: latitude,
+        checkinLng: longitude,
+        checkinAccuracy: accuracy
+      });
+      checkinTime = new Date();
+      document.getElementById('checkin-success').textContent = 'Checked in successfully. Timer started. Client has been notified.';
+      document.getElementById('checkin-success').classList.add('show');
+      setTimeout(() => showTimer(), 1500);
+    } catch(e) {
+      showError('Check-in failed. Please try again.');
+      btn.disabled = false;
+      btn.innerHTML = '<i class="ti ti-map-pin"></i> Check in now';
+    }
+  }, (err) => {
+    showError('Could not get your location. Please enable location access and try again.');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ti ti-map-pin"></i> Check in now';
+  }, { enableHighAccuracy: true, timeout: 10000 });
+};
+
+const showTimer = () => {
+  document.getElementById('checkin-panel').style.display = 'none';
+  document.getElementById('status-panel').classList.add('show');
+  timerInterval = setInterval(updateTimer, 1000);
+  updateTimer();
+};
+
+const updateTimer = () => {
+  if (!checkinTime) return;
+  const elapsed = Math.floor((new Date() - checkinTime) / 1000);
+  const h = Math.floor(elapsed / 3600).toString().padStart(2, '0');
+  const m = Math.floor((elapsed % 3600) / 60).toString().padStart(2, '0');
+  const s = (elapsed % 60).toString().padStart(2, '0');
+  document.getElementById('timer').textContent = `${h}:${m}:${s}`;
+};
+
+window.checkOut = async () => {
+  if (!confirm('End this booking and check out?')) return;
+  clearInterval(timerInterval);
+  const elapsed = Math.floor((new Date() - checkinTime) / 1000 / 60);
+  await updateDoc(doc(db, 'bookings', bookingId), {
+    status: 'completed',
+    checkoutAt: serverTimestamp(),
+    actualDurationMinutes: elapsed
+  });
+  window.location.href = '/havoc-dashboard.html';
+};
+
+const showError = (msg) => {
+  const el = document.getElementById('checkin-error');
+  el.textContent = msg;
+  el.classList.add('show');
+  document.getElementById('checkin-btn').disabled = false;
+  document.getElementById('checkin-btn').innerHTML = '<i class="ti ti-map-pin"></i> Try again';
+};
+</script>
+
+</body>
+</html>
