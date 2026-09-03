@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAVOC — Book Presence</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 32px; border-bottom: 1px solid rgba(255,255,255,0.07); position: sticky; top: 0; background: rgba(8,8,8,0.95); backdrop-filter: blur(12px); z-index: 100; }
+.nav-logo { font-size: 20px; font-weight: 800; letter-spacing: 0.25em; color: #fff; border: 2px solid #fff; padding: 3px 10px; line-height: 1; text-decoration: none; }
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.nav-user { font-size: 12px; color: rgba(255,255,255,0.45); }
+.nav-signout { font-size: 11px; color: rgba(255,255,255,0.3); cursor: pointer; background: none; border: none; font-family: 'Inter', sans-serif; }
+.nav-signout:hover { color: rgba(255,255,255,0.7); }
+
+.sidebar { position: fixed; left: 0; top: 57px; bottom: 0; width: 220px; border-right: 1px solid rgba(255,255,255,0.06); background: #080808; padding: 24px 0; }
+.nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 24px; font-size: 13px; color: rgba(255,255,255,0.45); cursor: pointer; transition: all 0.2s; text-decoration: none; }
+.nav-item:hover { color: #fff; background: rgba(255,255,255,0.04); }
+.nav-item.active { color: #fff; background: rgba(255,255,255,0.07); border-right: 2px solid #fff; }
+.nav-item i { font-size: 17px; }
+
+.main { margin-left: 220px; padding: 40px 40px; }
+
+.page { display: none; }
+.page.active { display: block; }
+
+.page-title { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px; }
+.page-sub { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 36px; }
+
+.booking-form { background: #0e0e0e; border: 1px solid rgba(255,255,255,0.06); padding: 36px; max-width: 640px; }
+.form-section { margin-bottom: 28px; }
+.form-section-title { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 7px; }
+.field input, .field select, .field textarea { width: 100%; background: #141414; border: 1px solid rgba(255,255,255,0.1); color: #fff; font-family: 'Inter', sans-serif; font-size: 13px; padding: 12px 14px; outline: none; border-radius: 0; transition: border-color 0.2s; -webkit-appearance: none; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: rgba(255,255,255,0.35); }
+.field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,0.2); }
+.field select option { background: #141414; }
+.field textarea { resize: vertical; min-height: 80px; }
+.frow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.price-preview { background: #141414; border: 1px solid rgba(255,255,255,0.08); padding: 20px; margin: 20px 0; display: flex; justify-content: space-between; align-items: center; }
+.price-label { font-size: 12px; color: rgba(255,255,255,0.4); }
+.price-amount { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; }
+.price-note { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 3px; }
+
+.submit-btn { width: 100%; background: #fff; color: #080808; font-family: 'Inter', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.07em; padding: 15px; border: none; cursor: pointer; text-transform: uppercase; transition: opacity 0.2s; }
+.submit-btn:hover { opacity: 0.88; }
+
+.bookings-list { display: flex; flex-direction: column; gap: 2px; }
+.booking-card { background: #0e0e0e; border: 1px solid rgba(255,255,255,0.06); padding: 24px; display: flex; justify-content: space-between; align-items: center; }
+.booking-info {}
+.booking-type { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.booking-meta { font-size: 12px; color: rgba(255,255,255,0.4); }
+.booking-right { text-align: right; }
+.booking-status { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; margin-bottom: 6px; }
+.status-pending { background: rgba(255,200,0,0.1); color: rgba(255,200,0,0.8); }
+.status-confirmed { background: rgba(60,255,120,0.1); color: rgba(60,255,120,0.8); }
+.status-completed { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+.booking-price { font-size: 16px; font-weight: 700; }
+
+.empty-state { text-align: center; padding: 80px 40px; }
+.empty-state i { font-size: 40px; color: rgba(255,255,255,0.1); margin-bottom: 16px; display: block; }
+.empty-state p { font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 24px; }
+.empty-btn { display: inline-block; background: #fff; color: #080808; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; padding: 12px 24px; text-transform: uppercase; cursor: pointer; border: none; font-family: 'Inter', sans-serif; }
+
+.success-banner { background: rgba(60,255,120,0.08); border: 1px solid rgba(60,255,120,0.2); color: rgba(100,255,150,1); font-size: 13px; padding: 16px 20px; margin-bottom: 24px; display: none; }
+.success-banner.show { display: block; }
+.error-banner { background: rgba(255,60,60,0.08); border: 1px solid rgba(255,60,60,0.2); color: rgba(255,120,120,1); font-size: 13px; padding: 16px 20px; margin-bottom: 24px; display: none; }
+.error-banner.show { display: block; }
+
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 24px 20px; }
+  .frow { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">HAVOC</a>
+  <div class="nav-right">
+    <span class="nav-user" id="user-name">Loading...</span>
+    <button class="nav-signout" onclick="signOut()">Sign out</button>
+  </div>
+</nav>
+
+<div class="sidebar">
+  <a class="nav-item active" onclick="showPage('book')" href="#">
+    <i class="ti ti-plus"></i> Book a Havoc
+  </a>
+  <a class="nav-item" onclick="showPage('bookings')" href="#">
+    <i class="ti ti-calendar"></i> My Bookings
+  </a>
+  <a class="nav-item" onclick="showPage('account')" href="#">
+    <i class="ti ti-user"></i> Account
+  </a>
+  <a class="nav-item" onclick="showPage('support')" href="#">
+    <i class="ti ti-help"></i> Support
+  </a>
+</div>
+
+<div class="main">
+
+  <!-- BOOK PAGE -->
+  <div class="page active" id="page-book">
+    <div class="page-title">Book a Havoc.</div>
+    <div class="page-sub">Fill in your booking details. We confirm within the hour.</div>
+    <div class="success-banner" id="book-success">Your booking request has been submitted. We'll confirm within the hour.</div>
+    <div class="error-banner" id="book-error"></div>
+    <div class="booking-form">
+      <div class="form-section">
+        <div class="form-section-title">Booking details</div>
+        <div class="field"><label>Booking type</label>
+          <select id="b-type" onchange="updatePrice()">
+            <option value="" disabled selected>Select type</option>
+            <option value="video_shoot">Video shoot</option>
+            <option value="door_work">Door work / event</option>
+            <option value="accompaniment">Accompaniment</option>
+            <option value="vip_corporate">VIP / corporate</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field"><label>Location / City</label><input type="text" id="b-location" placeholder="City and venue or area"></div>
+        <div class="frow">
+          <div class="field"><label>Date</label><input type="date" id="b-date"></div>
+          <div class="field"><label>Start time</label><input type="time" id="b-time"></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label>Duration (hours)</label>
+            <select id="b-duration" onchange="updatePrice()">
+              <option value="" disabled selected>Select</option>
+              <option value="2">2 hours (minimum)</option>
+              <option value="3">3 hours</option>
+              <option value="4">4 hours</option>
+              <option value="5">5 hours</option>
+              <option value="6">6 hours</option>
+              <option value="8">Full day (8hrs)</option>
+            </select>
+          </div>
+          <div class="field"><label>Number of Havocs</label>
+            <select id="b-quantity" onchange="updatePrice()">
+              <option value="1">1 Havoc</option>
+              <option value="2">2 Havocs</option>
+              <option value="3">3 Havocs</option>
+              <option value="4">4 Havocs</option>
+              <option value="5">5+ Havocs</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title">Requirements</div>
+        <div class="field"><label>Dress code</label><input type="text" id="b-dress" placeholder="e.g. All black, suit, smart casual"></div>
+        <div class="field"><label>Additional details</label><textarea id="b-details" placeholder="Any specific requirements, context, or instructions..."></textarea></div>
+      </div>
+      <div class="price-preview">
+        <div>
+          <div class="price-label">Estimated total</div>
+          <div class="price-note">Card saved — charged on Havoc arrival</div>
+        </div>
+        <div style="text-align:right">
+          <div class="price-amount" id="price-display">—</div>
+          <div class="price-note" id="price-breakdown"></div>
+        </div>
+      </div>
+      <button class="submit-btn" onclick="submitBooking()">Submit booking request</button>
+    </div>
+  </div>
+
+  <!-- BOOKINGS PAGE -->
+  <div class="page" id="page-bookings">
+    <div class="page-title">My Bookings.</div>
+    <div class="page-sub">Your booking history and upcoming bookings.</div>
+    <div class="bookings-list" id="bookings-list">
+      <div class="empty-state">
+        <i class="ti ti-calendar-off"></i>
+        <p>No bookings yet. Book your first Havoc.</p>
+        <button class="empty-btn" onclick="showPage('book')">Book a Havoc</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCOUNT PAGE -->
+  <div class="page" id="page-account">
+    <div class="page-title">Account.</div>
+    <div class="page-sub">Your account details.</div>
+    <div class="booking-form" style="max-width:480px;">
+      <div class="field"><label>Full name</label><input type="text" id="acc-name" placeholder="Your name"></div>
+      <div class="field"><label>Email</label><input type="email" id="acc-email" placeholder="your@email.com" disabled style="opacity:0.5;"></div>
+      <div class="field"><label>Phone</label><input type="tel" id="acc-phone" placeholder="+27 or international"></div>
+      <button class="submit-btn" onclick="updateAccount()">Save changes</button>
+    </div>
+  </div>
+
+  <!-- SUPPORT PAGE -->
+  <div class="page" id="page-support">
+    <div class="page-title">Support.</div>
+    <div class="page-sub">Need help? We're here.</div>
+    <div class="booking-form" style="max-width:480px;">
+      <div style="margin-bottom:20px;padding:20px;background:#141414;border:1px solid rgba(255,255,255,0.06);">
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;">Email us</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);">info@havocpresence.com</div>
+      </div>
+      <div style="margin-bottom:20px;padding:20px;background:#141414;border:1px solid rgba(255,255,255,0.06);">
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px;">Response time</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);">We respond within 1 hour for booking queries, 24 hours for all other enquiries.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut as fbSignOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, query, where, orderBy, getDocs, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCO7B3n_L-hZj9kHAqNTS8gaDFtCRz4ESM",
+  authDomain: "havoc-ae499.firebaseapp.com",
+  projectId: "havoc-ae499",
+  storageBucket: "havoc-ae499.firebasestorage.app",
+  messagingSenderId: "233766682734",
+  appId: "1:233766682734:web:a4cc2c0542333fb21ca67f",
+  measurementId: "G-G20780L1N1"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentUser = null;
+let userDoc = null;
+
+const RATES = {
+  'ZA': { currency: 'R', rate: 500, symbol: 'ZAR' },
+  'AE': { currency: 'AED', rate: 500, symbol: 'AED' },
+  'US': { currency: '$', rate: 120, symbol: 'USD' },
+  'GB': { currency: '£', rate: 90, symbol: 'GBP' },
+  'AU': { currency: 'AU$', rate: 150, symbol: 'AUD' },
+  'SG': { currency: 'SGD', rate: 160, symbol: 'SGD' },
+  'CA': { currency: 'CAD', rate: 140, symbol: 'CAD' },
+  'default': { currency: '$', rate: 120, symbol: 'USD' }
+};
+
+let userRate = RATES['default'];
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) { window.location.href = '/auth.html'; return; }
+  currentUser = user;
+  document.getElementById('user-name').textContent = user.displayName || user.email;
+  const uDoc = await getDoc(doc(db, 'users', user.uid));
+  if (uDoc.exists()) {
+    userDoc = uDoc.data();
+    if (userDoc.role === 'havoc') { window.location.href = '/havoc-dashboard.html'; return; }
+    document.getElementById('acc-name').value = userDoc.name || '';
+    document.getElementById('acc-email').value = userDoc.email || user.email;
+    document.getElementById('acc-phone').value = userDoc.phone || '';
+  }
+  loadBookings();
+});
+
+window.showPage = (p) => {
+  document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  document.getElementById(`page-${p}`).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if (p === 'bookings') loadBookings();
+};
+
+window.updatePrice = () => {
+  const duration = parseInt(document.getElementById('b-duration').value) || 0;
+  const quantity = parseInt(document.getElementById('b-quantity').value) || 1;
+  if (!duration) { document.getElementById('price-display').textContent = '—'; return; }
+  const total = userRate.rate * duration * quantity;
+  document.getElementById('price-display').textContent = `${userRate.currency}${total.toLocaleString()}`;
+  document.getElementById('price-breakdown').textContent = `${userRate.currency}${userRate.rate}/hr × ${duration}hrs × ${quantity} Havoc${quantity > 1 ? 's' : ''}`;
+};
+
+window.submitBooking = async () => {
+  if (!currentUser) return;
+  const type = document.getElementById('b-type').value;
+  const location = document.getElementById('b-location').value;
+  const date = document.getElementById('b-date').value;
+  const time = document.getElementById('b-time').value;
+  const duration = document.getElementById('b-duration').value;
+  const quantity = document.getElementById('b-quantity').value;
+  if (!type || !location || !date || !time || !duration) {
+    document.getElementById('book-error').textContent = 'Please fill in all required fields.';
+    document.getElementById('book-error').classList.add('show');
+    return;
+  }
+  document.getElementById('book-error').classList.remove('show');
+  try {
+    await addDoc(collection(db, 'bookings'), {
+      clientId: currentUser.uid,
+      clientName: userDoc?.name || currentUser.displayName || currentUser.email,
+      clientEmail: currentUser.email,
+      type, location, date, time,
+      duration: parseInt(duration),
+      quantity: parseInt(quantity),
+      dressCode: document.getElementById('b-dress').value,
+      details: document.getElementById('b-details').value,
+      status: 'pending',
+      currency: userRate.symbol,
+      rate: userRate.rate,
+      estimatedTotal: userRate.rate * parseInt(duration) * parseInt(quantity),
+      createdAt: serverTimestamp()
+    });
+    document.getElementById('book-success').classList.add('show');
+    document.getElementById('b-type').value = '';
+    document.getElementById('b-location').value = '';
+    document.getElementById('b-date').value = '';
+    document.getElementById('b-time').value = '';
+    document.getElementById('b-duration').value = '';
+    document.getElementById('b-dress').value = '';
+    document.getElementById('b-details').value = '';
+    document.getElementById('price-display').textContent = '—';
+    window.scrollTo(0, 0);
+  } catch (e) {
+    document.getElementById('book-error').textContent = 'Failed to submit booking. Please try again.';
+    document.getElementById('book-error').classList.add('show');
+  }
+};
+
+const loadBookings = async () => {
+  if (!currentUser) return;
+  const list = document.getElementById('bookings-list');
+  try {
+    const q = query(collection(db, 'bookings'), where('clientId', '==', currentUser.uid), orderBy('createdAt', 'desc'));
+    const snap = await getDocs(q);
+    if (snap.empty) return;
+    list.innerHTML = '';
+    snap.forEach(d => {
+      const b = d.data();
+      const typeLabels = { video_shoot: 'Video shoot', door_work: 'Door work', accompaniment: 'Accompaniment', vip_corporate: 'VIP / Corporate', other: 'Other' };
+      list.innerHTML += `
+        <div class="booking-card">
+          <div class="booking-info">
+            <div class="booking-type">${typeLabels[b.type] || b.type}</div>
+            <div class="booking-meta">${b.location} · ${b.date} at ${b.time} · ${b.duration}hrs · ${b.quantity} Havoc${b.quantity > 1 ? 's' : ''}</div>
+          </div>
+          <div class="booking-right">
+            <div class="booking-status status-${b.status}">${b.status}</div>
+            <div class="booking-price">${b.currency === 'ZAR' ? 'R' : b.currency === 'AED' ? 'AED ' : b.currency === 'GBP' ? '£' : '$'}${b.estimatedTotal?.toLocaleString()}</div>
+          </div>
+        </div>`;
+    });
+  } catch (e) { console.log(e); }
+};
+
+window.updateAccount = async () => {
+  if (!currentUser) return;
+  await updateDoc(doc(db, 'users', currentUser.uid), {
+    name: document.getElementById('acc-name').value,
+    phone: document.getElementById('acc-phone').value
+  });
+  alert('Account updated.');
+};
+
+window.signOut = async () => {
+  await fbSignOut(auth);
+  window.location.href = '/';
+};
+</script>
+
+</body>
+</html>
