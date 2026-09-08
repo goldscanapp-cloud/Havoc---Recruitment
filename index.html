@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HAVOC — Join the Roster</title>
+<meta name="description" content="Big built. Get paid. HAVOC connects commanding individuals with clients who need presence. Apply to join the roster.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
@@ -11,14 +12,24 @@
 html { scroll-behavior: smooth; }
 body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
+/* NAV */
 .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 48px; border-bottom: 1px solid rgba(255,255,255,0.07); position: sticky; top: 0; background: rgba(8,8,8,0.95); backdrop-filter: blur(12px); z-index: 100; }
-.nav-logo { font-size: 28px; font-weight: 800; letter-spacing: 0.25em; color: #fff; border: 2px solid #fff; padding: 4px 14px; line-height: 1; }
+.nav-logo { font-size: 28px; font-weight: 800; letter-spacing: 0.25em; color: #fff; border: 2px solid #fff; padding: 4px 14px; line-height: 1; text-decoration: none; }
 .nav-links { display: flex; gap: 32px; }
 .nav-links a { font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 500; text-decoration: none; transition: color 0.2s; }
 .nav-links a:hover { color: #fff; }
 .nav-btn { background: #fff; color: #080808; font-size: 11px; font-weight: 700; padding: 9px 18px; letter-spacing: 0.07em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
 .nav-btn:hover { opacity: 0.85; }
+.nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; flex-direction: column; gap: 5px; }
+.nav-hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: all 0.2s; }
 
+/* MOBILE MENU */
+.mobile-menu { display: none; position: fixed; top: 57px; left: 0; right: 0; background: #080808; border-bottom: 1px solid rgba(255,255,255,0.1); z-index: 99; padding: 20px 24px; flex-direction: column; gap: 0; }
+.mobile-menu.open { display: flex; }
+.mobile-menu a { font-size: 14px; color: rgba(255,255,255,0.6); text-decoration: none; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 500; }
+.mobile-menu a:last-child { border-bottom: none; background: #fff; color: #080808; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; text-align: center; margin-top: 12px; padding: 14px; }
+
+/* HERO */
 .hero { padding: 64px 48px 48px; }
 .badge { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.04em; margin-bottom: 24px; }
 .badge-dot { width: 6px; height: 6px; background: rgba(255,255,255,0.5); border-radius: 50%; animation: pulse 2s infinite; }
@@ -35,12 +46,14 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
 .btn-g { font-size: 12px; color: rgba(255,255,255,0.4); text-decoration: none; }
 .btn-g:hover { color: rgba(255,255,255,0.7); }
 
+/* RATES */
 .rates { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,0.06); border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
 .rc { background: #080808; padding: 28px 32px; }
 .rc-r { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 10px; font-weight: 600; }
 .rc-n { font-size: 38px; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1; margin-bottom: 6px; }
 .rc-k { font-size: 12px; color: rgba(255,255,255,0.4); }
 
+/* SECTIONS */
 .sec { padding: 48px 48px; border-top: 1px solid rgba(255,255,255,0.05); }
 .eye { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 24px; }
 .cards4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,0.05); }
@@ -59,6 +72,7 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
 .trait-t { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: #fff; }
 .trait-b { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.55; }
 
+/* RULES */
 .rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 32px; }
 .col-l { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 18px; }
 .col-l.a { color: rgba(255,255,255,0.55); }
@@ -70,51 +84,72 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
 .rule strong { color: #fff; font-weight: 600; }
 .rule em { font-style: normal; color: rgba(255,255,255,0.3); }
 
+/* STEPS */
 .steps3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(255,255,255,0.05); }
 .step { background: #0a0a0a; padding: 32px 28px; }
 .step-n { font-size: 44px; font-weight: 800; color: rgba(255,255,255,0.08); letter-spacing: -0.04em; margin-bottom: 16px; }
 .step-t { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 10px; }
 .step-b { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.65; }
 
+/* CTA */
 .cta-dark { padding: 56px 48px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; background: #0d0d0d; }
 .cta-h { font-size: clamp(36px,4vw,52px); font-weight: 800; color: #fff; line-height: 0.9; letter-spacing: -0.03em; margin-bottom: 12px; }
 .cta-s { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.65; max-width: 360px; margin-bottom: 28px; }
 .cta-n { font-size: clamp(72px,12vw,120px); font-weight: 800; color: #fff; line-height: 0.85; letter-spacing: -0.05em; }
 .cta-nl { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 6px; text-align: right; }
 
+/* FORM */
 .form-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
 .form-h { font-size: clamp(32px,3.5vw,48px); font-weight: 800; line-height: 0.9; letter-spacing: -0.03em; margin-bottom: 14px; color: #fff; }
 .form-sub { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.7; margin-top: 16px; }
 .form-sub strong { color: rgba(255,255,255,0.8); font-weight: 600; }
 .field { margin-bottom: 12px; }
 .field label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 7px; }
+.field label .req { color: rgba(255,80,80,0.8); margin-left: 2px; }
 .field input, .field select { width: 100%; background: #141414; border: 1px solid rgba(255,255,255,0.1); color: #fff; font-family: 'Inter',sans-serif; font-size: 13px; padding: 12px 14px; outline: none; -webkit-appearance: none; border-radius: 0; transition: border-color 0.2s; }
 .field input:focus, .field select:focus { border-color: rgba(255,255,255,0.35); }
 .field input::placeholder { color: rgba(255,255,255,0.2); }
+.field input.error, .field select.error { border-color: rgba(255,80,80,0.6); }
 .field select option { background: #141414; }
 .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.upload { border: 1px dashed rgba(255,255,255,0.12); background: #111; padding: 28px; text-align: center; margin-bottom: 12px; cursor: pointer; transition: border-color 0.2s; }
-.upload:hover { border-color: rgba(255,255,255,0.3); }
+
+/* FILE UPLOAD */
+.upload-wrap { position: relative; margin-bottom: 12px; }
+.upload-input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; z-index: 2; }
+.upload { border: 1px dashed rgba(255,255,255,0.12); background: #111; padding: 28px; text-align: center; cursor: pointer; transition: border-color 0.2s; }
+.upload:hover, .upload-wrap:hover .upload { border-color: rgba(255,255,255,0.3); }
+.upload.has-file { border-color: rgba(78,255,145,0.4); background: rgba(78,255,145,0.04); }
 .upload i { font-size: 22px; color: rgba(255,255,255,0.3); }
 .upload-l { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); margin-top: 10px; margin-bottom: 3px; }
 .upload-h { font-size: 11px; color: rgba(255,255,255,0.28); }
+.upload-name { font-size: 12px; color: rgba(78,255,145,0.8); margin-top: 6px; font-weight: 600; }
+
 .sub-btn { width: 100%; background: #fff; color: #080808; font-family: 'Inter',sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.08em; padding: 15px; border: none; cursor: pointer; text-transform: uppercase; transition: opacity 0.2s; }
 .sub-btn:hover { opacity: 0.88; }
+.sub-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .fnote { font-size: 11px; color: rgba(255,255,255,0.22); text-align: center; margin-top: 12px; line-height: 1.6; }
 
+.error-banner { background: rgba(255,60,60,0.08); border: 1px solid rgba(255,60,60,0.25); color: rgba(255,120,120,1); font-size: 12px; padding: 12px 14px; margin-bottom: 14px; display: none; line-height: 1.6; }
+.error-banner.show { display: block; }
+
+/* TICKER */
 .ticker { border-top: 1px solid rgba(255,255,255,0.08); padding: 16px 0; overflow: hidden; background: #080808; }
 .ticker-inner { display: flex; animation: tick 30s linear infinite; width: max-content; }
 @keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 .ti { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: rgba(255,255,255,0.5); text-transform: uppercase; padding: 0 28px; white-space: nowrap; }
 .ti::after { content: '·'; margin-left: 28px; color: rgba(255,255,255,0.2); }
 
+/* FOOTER */
 .foot { border-top: 1px solid rgba(255,255,255,0.07); padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; }
 .fl { font-size: 17px; font-weight: 800; letter-spacing: 0.25em; color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.2); padding: 4px 12px; }
 .fc { font-size: 11px; color: rgba(255,255,255,0.28); }
 
+/* MOBILE */
 @media (max-width: 768px) {
   .nav { padding: 14px 20px; }
   .nav-links { display: none; }
+  .nav-btn { display: none; }
+  .nav-hamburger { display: flex; }
   .hero { padding: 48px 20px 36px; }
   .rates { grid-template-columns: repeat(2,1fr); }
   .sec { padding: 36px 20px; }
@@ -139,7 +174,18 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
     <a href="#how">How it works</a>
   </div>
   <a href="#apply" class="nav-btn">Apply now</a>
+  <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#what" onclick="closeMenu()">What is a Havoc</a>
+  <a href="#standard" onclick="closeMenu()">What's expected</a>
+  <a href="#rates" onclick="closeMenu()">Rates</a>
+  <a href="#how" onclick="closeMenu()">How it works</a>
+  <a href="#apply" onclick="closeMenu()">Apply now</a>
+</div>
 
 <section class="hero">
   <div class="badge"><span class="badge-dot"></span>Now recruiting worldwide</div>
@@ -238,33 +284,74 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
 
 <section class="sec" id="apply">
   <div class="eye">Apply now</div>
-  <form action="https://api.web3forms.com/submit" method="POST">
-      <input type="hidden" name="access_key" value="7f5a8b5e-db68-45a0-80d8-aea6fa64632a">
-      <input type="hidden" name="subject" value="New HAVOC Application">
-      <input type="hidden" name="redirect" value="https://havocpresence.com/thanks.html">
-      <div class="form-wrap">
-    <div>
-      <div class="form-h">Think you've<br>got what it takes?</div>
-      <div class="form-sub">Fill in your details and upload a full body photo. <strong>We review every application personally.</strong> First to apply in your city get first bookings when we launch there.</div>
-    </div>
-    <div>
-      <div class="field"><label>Full name</label><input type="text" name="name" placeholder="First and last name" required></div>
-      <div class="field"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required></div>
-      <div class="field"><label>Phone number</label><input type="tel" name="phone" placeholder="+27 or international" required></div>
-      <div class="field"><label>Your city</label><input type="text" name="city" placeholder="City" required></div>
-      <div class="frow">
-        <div class="field"><label>Height</label><input type="text" name="height" placeholder="e.g. 188cm"></div>
-        <div class="field"><label>Weight</label><input type="text" name="weight" placeholder="e.g. 100kg"></div>
+  <form id="apply-form" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="access_key" value="7f5a8b5e-db68-45a0-80d8-aea6fa64632a">
+    <input type="hidden" name="subject" value="New HAVOC Application">
+    <input type="hidden" name="redirect" value="https://havocpresence.com/thanks.html">
+    <input type="hidden" name="from_name" value="HAVOC Recruitment">
+
+    <div class="form-wrap">
+      <div>
+        <div class="form-h">Think you've<br>got what it takes?</div>
+        <div class="form-sub">Fill in your details and upload a full body photo. <strong>We review every application personally.</strong> First to apply in your city get first bookings when we launch there.</div>
       </div>
-      <div class="field"><label>Build type</label><select name="build_type"><option value="" disabled selected>Select your build</option><option>Athletic / muscular</option><option>Large / heavyweight</option><option>Tall and lean</option></select></div>
-      <div class="field"><label>Full body photo</label>
-        <input type="file" name="photo" accept="image/*" style="width:100%;background:#141414;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-family:'Inter',sans-serif;font-size:12px;padding:11px 12px;border-radius:0;">
+      <div>
+        <div class="error-banner" id="form-error"></div>
+
+        <div class="field">
+          <label>Full name <span class="req">*</span></label>
+          <input type="text" name="name" id="f-name" placeholder="First and last name" required>
+        </div>
+        <div class="field">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" name="email" id="f-email" placeholder="your@email.com" required>
+        </div>
+        <div class="field">
+          <label>Phone number <span class="req">*</span></label>
+          <input type="tel" name="phone" id="f-phone" placeholder="+27 or international" required>
+        </div>
+        <div class="field">
+          <label>Your city <span class="req">*</span></label>
+          <input type="text" name="city" id="f-city" placeholder="City" required>
+        </div>
+        <div class="frow">
+          <div class="field">
+            <label>Height <span class="req">*</span></label>
+            <input type="text" name="height" id="f-height" placeholder="e.g. 188cm" required>
+          </div>
+          <div class="field">
+            <label>Weight <span class="req">*</span></label>
+            <input type="text" name="weight" id="f-weight" placeholder="e.g. 100kg" required>
+          </div>
+        </div>
+        <div class="field">
+          <label>Build type <span class="req">*</span></label>
+          <select name="build" id="f-build" required>
+            <option value="" disabled selected>Select your build</option>
+            <option value="Athletic / muscular">Athletic / muscular</option>
+            <option value="Large / heavyweight">Large / heavyweight</option>
+            <option value="Tall and lean">Tall and lean</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Full body photo <span class="req">*</span></label>
+          <div class="upload-wrap">
+            <input type="file" name="photo" id="f-photo" class="upload-input" accept="image/*" onchange="handleFileSelect(this)">
+            <div class="upload" id="upload-box">
+              <i class="ti ti-camera"></i>
+              <div class="upload-l">Tap to upload your photo</div>
+              <div class="upload-h">Full body, clear photo. JPG or PNG.</div>
+              <div class="upload-name" id="upload-name"></div>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="sub-btn" onclick="submitForm()">Submit my application</button>
+        <div class="fnote">We review every application personally. You'll hear from us within 24 hours.</div>
       </div>
-      <button type="submit" class="sub-btn">Submit my application</button>
-      <div class="fnote">We review every application personally. You'll hear from us within 24 hours.</div>
     </div>
-  </div>
-</form>
+  </form>
 </section>
 
 <div class="ticker">
@@ -278,6 +365,78 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
   <div class="fc">© 2026 Security Spot (Pty) Ltd · havocpresence.com · info@havocpresence.com</div>
   <div class="fc">@havocpresence</div>
 </footer>
+
+<script>
+// Mobile menu
+function toggleMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+}
+// Close menu on outside click
+document.addEventListener('click', (e) => {
+  const menu = document.getElementById('mobile-menu');
+  const hamburger = document.querySelector('.nav-hamburger');
+  if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+    menu.classList.remove('open');
+  }
+});
+
+// File upload feedback
+function handleFileSelect(input) {
+  const file = input.files[0];
+  const box = document.getElementById('upload-box');
+  const name = document.getElementById('upload-name');
+  if (file) {
+    box.classList.add('has-file');
+    name.textContent = '✓ ' + file.name;
+  } else {
+    box.classList.remove('has-file');
+    name.textContent = '';
+  }
+}
+
+// Form validation + submit
+function submitForm() {
+  const fields = ['f-name', 'f-email', 'f-phone', 'f-city', 'f-height', 'f-weight', 'f-build'];
+  const errorEl = document.getElementById('form-error');
+  let valid = true;
+
+  // Clear previous errors
+  fields.forEach(id => document.getElementById(id).classList.remove('error'));
+  errorEl.classList.remove('show');
+
+  // Check each required field
+  fields.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) {
+      el.classList.add('error');
+      valid = false;
+    }
+  });
+
+  // Check photo
+  const photo = document.getElementById('f-photo');
+  if (!photo.files || !photo.files[0]) {
+    document.getElementById('upload-box').style.borderColor = 'rgba(255,80,80,0.6)';
+    valid = false;
+  }
+
+  if (!valid) {
+    errorEl.textContent = 'Please fill in all fields and upload a photo before submitting.';
+    errorEl.classList.add('show');
+    errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  // All good — submit
+  const btn = document.querySelector('.sub-btn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+  document.getElementById('apply-form').submit();
+}
+</script>
 
 </body>
 </html>
