@@ -21,13 +21,13 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
 .nav-btn { background: #fff; color: #080808; font-size: 11px; font-weight: 700; padding: 9px 18px; letter-spacing: 0.07em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
 .nav-btn:hover { opacity: 0.85; }
 .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; flex-direction: column; gap: 5px; }
-.nav-hamburger span { display: block; width: 22px; height: 2px; background: #fff; transition: all 0.2s; }
+.nav-hamburger span { display: block; width: 22px; height: 2px; background: #fff; }
 
 /* MOBILE MENU */
-.mobile-menu { display: none; position: fixed; top: 57px; left: 0; right: 0; background: #080808; border-bottom: 1px solid rgba(255,255,255,0.1); z-index: 99; padding: 20px 24px; flex-direction: column; gap: 0; }
+.mobile-menu { display: none; position: fixed; top: 57px; left: 0; right: 0; background: #080808; border-bottom: 1px solid rgba(255,255,255,0.1); z-index: 99; padding: 20px 24px; flex-direction: column; }
 .mobile-menu.open { display: flex; }
 .mobile-menu a { font-size: 14px; color: rgba(255,255,255,0.6); text-decoration: none; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 500; }
-.mobile-menu a:last-child { border-bottom: none; background: #fff; color: #080808; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; text-align: center; margin-top: 12px; padding: 14px; }
+.mobile-menu a.apply-link { border-bottom: none; background: #fff; color: #080808; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; text-align: center; margin-top: 12px; padding: 14px; }
 
 /* HERO */
 .hero { padding: 64px 48px 48px; }
@@ -35,8 +35,8 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
 .badge-dot { width: 6px; height: 6px; background: rgba(255,255,255,0.5); border-radius: 50%; animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 .h1 { font-size: clamp(60px,9vw,110px); font-weight: 800; line-height: 0.88; letter-spacing: -0.04em; color: #fff; }
-.h1o { display: block; font-size: clamp(60px,9vw,110px); font-weight: 800; line-height: 0.88; letter-spacing: -0.04em; -webkit-text-stroke: 2px rgba(255,255,255,0.85); color: transparent; margin-bottom: 20px; }
-.slogan { font-size: 14px; color: rgba(255,255,255,0.4); letter-spacing: 0.04em; margin-bottom: 32px; font-weight: 400; }
+.h1o { display: block; font-size: clamp(60px,9vw,110px); font-weight: 800; line-height: 0.88; letter-spacing: -0.04em; -webkit-text-stroke: 2px rgba(255,255,255,0.85); color: transparent; margin-bottom: 16px; }
+.hero-tagline { font-size: clamp(16px,2vw,22px); font-weight: 700; color: rgba(255,255,255,0.55); letter-spacing: -0.01em; margin-bottom: 32px; }
 .hero-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 .hero-sub { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.7; max-width: 360px; }
 .hero-sub strong { color: #fff; font-weight: 600; }
@@ -46,12 +46,22 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
 .btn-g { font-size: 12px; color: rgba(255,255,255,0.4); text-decoration: none; }
 .btn-g:hover { color: rgba(255,255,255,0.7); }
 
-/* RATES */
-.rates { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,0.06); border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
-.rc { background: #080808; padding: 28px 32px; }
-.rc-r { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 10px; font-weight: 600; }
-.rc-n { font-size: 38px; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1; margin-bottom: 6px; }
-.rc-k { font-size: 12px; color: rgba(255,255,255,0.4); }
+/* GLOBAL STATEMENT — line 2 */
+.global-stmt { padding: 28px 48px; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); background: #0a0a0a; text-align: center; }
+.global-stmt-text { font-size: clamp(18px,2.5vw,28px); font-weight: 800; letter-spacing: -0.02em; color: rgba(255,255,255,0.7); }
+
+/* RATES SCROLLER */
+.rates-wrap { overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.06); background: #080808; }
+.rates-inner { display: flex; animation: ratesScroll 50s linear infinite; width: max-content; }
+.rates-inner:hover { animation-play-state: paused; }
+@keyframes ratesScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+.rc { padding: 24px 36px; border-right: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; min-width: 170px; }
+.rc-r { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; font-weight: 600; }
+.rc-n { font-size: 26px; font-weight: 800; color: #fff; letter-spacing: -0.02em; line-height: 1; margin-bottom: 4px; }
+.rc-k { font-size: 11px; color: rgba(255,255,255,0.3); }
+.rc.sa { background: rgba(255,255,255,0.04); border-right-color: rgba(255,255,255,0.1); }
+.rc.sa .rc-r { color: rgba(255,255,255,0.7); }
+.rc.sa .rc-k { color: rgba(255,255,255,0.5); }
 
 /* SECTIONS */
 .sec { padding: 48px 48px; border-top: 1px solid rgba(255,255,255,0.05); }
@@ -98,6 +108,10 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
 .cta-n { font-size: clamp(72px,12vw,120px); font-weight: 800; color: #fff; line-height: 0.85; letter-spacing: -0.05em; }
 .cta-nl { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 6px; text-align: right; }
 
+/* NO BORDERS — line 3 */
+.no-borders { padding: 36px 48px; background: #0a0a0a; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
+.no-borders-text { font-size: clamp(22px,3vw,40px); font-weight: 800; letter-spacing: -0.02em; color: rgba(255,255,255,0.75); }
+
 /* FORM */
 .form-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
 .form-h { font-size: clamp(32px,3.5vw,48px); font-weight: 800; line-height: 0.9; letter-spacing: -0.03em; margin-bottom: 14px; color: #fff; }
@@ -112,21 +126,18 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
 .field input.error, .field select.error { border-color: rgba(255,80,80,0.6); }
 .field select option { background: #141414; }
 .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-
-.sub-btn { width: 100%; background: #fff; color: #080808; font-family: 'Inter',sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.08em; padding: 15px; border: none; cursor: pointer; text-transform: uppercase; transition: opacity 0.2s; }
+.sub-btn { width: 100%; background: #fff; color: #080808; font-family: 'Inter',sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.08em; padding: 15px; border: none; cursor: pointer; text-transform: uppercase; transition: opacity 0.2s; margin-top: 4px; }
 .sub-btn:hover { opacity: 0.88; }
 .sub-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .fnote { font-size: 11px; color: rgba(255,255,255,0.22); text-align: center; margin-top: 12px; line-height: 1.6; }
-
 .error-banner { background: rgba(255,60,60,0.08); border: 1px solid rgba(255,60,60,0.25); color: rgba(255,120,120,1); font-size: 12px; padding: 12px 14px; margin-bottom: 14px; display: none; line-height: 1.6; }
 .error-banner.show { display: block; }
 
-/* TICKER */
+/* BOTTOM TICKER */
 .ticker { border-top: 1px solid rgba(255,255,255,0.08); padding: 16px 0; overflow: hidden; background: #080808; }
-.ticker-inner { display: flex; animation: tick 30s linear infinite; width: max-content; }
+.ticker-inner { display: flex; animation: tick 35s linear infinite; width: max-content; }
 @keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-.ti { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: rgba(255,255,255,0.5); text-transform: uppercase; padding: 0 28px; white-space: nowrap; }
+.ti { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: rgba(255,255,255,0.45); text-transform: uppercase; padding: 0 28px; white-space: nowrap; }
 .ti::after { content: '·'; margin-left: 28px; color: rgba(255,255,255,0.2); }
 
 /* FOOTER */
@@ -141,13 +152,14 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
   .nav-btn { display: none; }
   .nav-hamburger { display: flex; }
   .hero { padding: 48px 20px 36px; }
-  .rates { grid-template-columns: repeat(2,1fr); }
+  .global-stmt { padding: 20px; }
   .sec { padding: 36px 20px; }
   .cards4 { grid-template-columns: repeat(2,1fr); }
   .two-col { grid-template-columns: 1fr; gap: 32px; }
   .rules-grid { grid-template-columns: 1fr; }
   .steps3 { grid-template-columns: 1fr; }
   .cta-dark { padding: 40px 20px; }
+  .no-borders { padding: 24px 20px; }
   .form-wrap { grid-template-columns: 1fr; gap: 32px; }
   .foot { padding: 20px; flex-direction: column; gap: 12px; text-align: center; }
 }
@@ -155,12 +167,12 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
 </head>
 <body>
 
+<!-- NAV -->
 <nav class="nav">
   <div class="nav-logo">HAVOC</div>
   <div class="nav-links">
     <a href="#what">What is a Havoc</a>
     <a href="#standard">What's expected</a>
-    <a href="#rates">Rates</a>
     <a href="#how">How it works</a>
   </div>
   <a href="#apply" class="nav-btn">Apply now</a>
@@ -172,16 +184,16 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
 <div class="mobile-menu" id="mobile-menu">
   <a href="#what" onclick="closeMenu()">What is a Havoc</a>
   <a href="#standard" onclick="closeMenu()">What's expected</a>
-  <a href="#rates" onclick="closeMenu()">Rates</a>
   <a href="#how" onclick="closeMenu()">How it works</a>
-  <a href="#apply" onclick="closeMenu()">Apply now</a>
+  <a href="#apply" onclick="closeMenu()" class="apply-link">Apply now</a>
 </div>
 
+<!-- HERO -->
 <section class="hero">
   <div class="badge"><span class="badge-dot"></span>Now recruiting worldwide</div>
   <div class="h1">Big built.</div>
   <span class="h1o">Get paid.</span>
-  <div class="slogan">The presence you need. When you need it.</div>
+  <div class="hero-tagline">Your city. Your gig. Your money.</div>
   <div class="hero-row">
     <div class="hero-sub">HAVOC connects <strong>commanding individuals</strong> with clients who need presence — events, shoots, door work, and more. Pick up gigs in your city. <strong>Get paid same day.</strong></div>
     <div class="hero-btns">
@@ -191,13 +203,51 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
   </div>
 </section>
 
-<div class="rates" id="rates">
-  <div class="rc"><div class="rc-r">South Africa</div><div class="rc-n">R500</div><div class="rc-k">You keep R400/hr</div></div>
-  <div class="rc"><div class="rc-r">Dubai</div><div class="rc-n">AED 500</div><div class="rc-k">You keep AED 400/hr</div></div>
-  <div class="rc"><div class="rc-r">USA</div><div class="rc-n">$120</div><div class="rc-k">You keep $96/hr</div></div>
-  <div class="rc"><div class="rc-r">UK</div><div class="rc-n">£90</div><div class="rc-k">You keep £72/hr</div></div>
+<!-- LINE 2: WHEREVER YOU ARE -->
+<div class="global-stmt">
+  <div class="global-stmt-text">Wherever you are, there's a booking waiting.</div>
 </div>
 
+<!-- 16 CITY RATES SCROLLER -->
+<div class="rates-wrap" id="rates">
+  <div class="rates-inner">
+    <div class="rc"><div class="rc-r">New York</div><div class="rc-n">$120</div><div class="rc-k">You keep $96/hr</div></div>
+    <div class="rc"><div class="rc-r">London</div><div class="rc-n">£90</div><div class="rc-k">You keep £72/hr</div></div>
+    <div class="rc"><div class="rc-r">Paris</div><div class="rc-n">€100</div><div class="rc-k">You keep €80/hr</div></div>
+    <div class="rc"><div class="rc-r">Berlin</div><div class="rc-n">€100</div><div class="rc-k">You keep €80/hr</div></div>
+    <div class="rc"><div class="rc-r">Toronto</div><div class="rc-n">CAD 140</div><div class="rc-k">You keep CAD 112/hr</div></div>
+    <div class="rc"><div class="rc-r">Amsterdam</div><div class="rc-n">€100</div><div class="rc-k">You keep €80/hr</div></div>
+    <div class="rc"><div class="rc-r">Hong Kong</div><div class="rc-n">HKD 950</div><div class="rc-k">You keep HKD 760/hr</div></div>
+    <div class="rc sa"><div class="rc-r">South Africa</div><div class="rc-n">R500</div><div class="rc-k">You keep R400/hr</div></div>
+    <div class="rc"><div class="rc-r">Dubai</div><div class="rc-n">AED 500</div><div class="rc-k">You keep AED 400/hr</div></div>
+    <div class="rc"><div class="rc-r">Tokyo</div><div class="rc-n">¥18,000</div><div class="rc-k">You keep ¥14,400/hr</div></div>
+    <div class="rc"><div class="rc-r">Sydney</div><div class="rc-n">AU$150</div><div class="rc-k">You keep AU$120/hr</div></div>
+    <div class="rc"><div class="rc-r">Singapore</div><div class="rc-n">SGD 160</div><div class="rc-k">You keep SGD 128/hr</div></div>
+    <div class="rc"><div class="rc-r">Los Angeles</div><div class="rc-n">$120</div><div class="rc-k">You keep $96/hr</div></div>
+    <div class="rc"><div class="rc-r">Miami</div><div class="rc-n">$120</div><div class="rc-k">You keep $96/hr</div></div>
+    <div class="rc"><div class="rc-r">Atlanta</div><div class="rc-n">$120</div><div class="rc-k">You keep $96/hr</div></div>
+    <div class="rc"><div class="rc-r">São Paulo</div><div class="rc-n">BRL 600</div><div class="rc-k">You keep BRL 480/hr</div></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="rc"><div class="rc-r">New York</div><div class="rc-n">$120</div><div class="rc-k">You keep $96/hr</div></div>
+    <div class="rc"><div class="rc-r">London</div><div class="rc-n">£90</div><div class="rc-k">You keep £72/hr</div></div>
+    <div class="rc"><div class="rc-r">Paris</div><div class="rc-n">€100</div><div class="rc-k">You keep €80/hr</div></div>
+    <div class="rc"><div class="rc-r">Berlin</div><div class="rc-n">€100</div><div class="rc-k">You keep €80/hr</div></div>
+    <div class="rc"><div class="rc-r">Toronto</div><div class="rc-n">CAD 140</div><div class="rc-k">You keep CAD 112/hr</div></div>
+    <div class="rc"><div class="rc-r">Amsterdam</div><div class="rc-n">€100</div><div class="rc-k">You keep €80/hr</div></div>
+    <div class="rc"><div class="rc-r">Hong Kong</div><div class="rc-n">HKD 950</div><div class="rc-k">You keep HKD 760/hr</div></div>
+    <div class="rc sa"><div class="rc-r">South Africa</div><div class="rc-n">R500</div><div class="rc-k">You keep R400/hr</div></div>
+    <div class="rc"><div class="rc-r">Dubai</div><div class="rc-n">AED 500</div><div class="rc-k">You keep AED 400/hr</div></div>
+    <div class="rc"><div class="rc-r">Tokyo</div><div class="rc-n">¥18,000</div><div class="rc-k">You keep ¥14,400/hr</div></div>
+    <div class="rc"><div class="rc-r">Sydney</div><div class="rc-n">AU$150</div><div class="rc-k">You keep AU$120/hr</div></div>
+    <div class="rc"><div class="rc-r">Singapore</div><div class="rc-n">SGD 160</div><div class="rc-k">You keep SGD 128/hr</div></div>
+    <div class="rc"><div class="rc-r">Los Angeles</div><div class="rc-n">$120</div><div class="rc-k">You keep $96/hr</div></div>
+    <div class="rc"><div class="rc-r">Miami</div><div class="rc-n">$120</div><div class="rc-k">You keep $96/hr</div></div>
+    <div class="rc"><div class="rc-r">Atlanta</div><div class="rc-n">$120</div><div class="rc-k">You keep $96/hr</div></div>
+    <div class="rc"><div class="rc-r">São Paulo</div><div class="rc-n">BRL 600</div><div class="rc-k">You keep BRL 480/hr</div></div>
+  </div>
+</div>
+
+<!-- WHAT YOU'LL BE BOOKED FOR -->
 <section class="sec">
   <div class="eye">What you'll be booked for</div>
   <div class="cards4">
@@ -208,6 +258,7 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
   </div>
 </section>
 
+<!-- WHAT IS A HAVOC -->
 <section class="sec" id="what" style="background:#0a0a0a;">
   <div class="eye">What is a Havoc</div>
   <div class="two-col">
@@ -225,6 +276,7 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
   </div>
 </section>
 
+<!-- THE STANDARD -->
 <section class="sec" id="standard">
   <div class="eye">The standard</div>
   <div class="sec-h">Simple rules.<br>No exceptions.</div>
@@ -250,16 +302,18 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
   </div>
 </section>
 
+<!-- HOW IT WORKS -->
 <section class="sec" id="how" style="background:#0a0a0a;">
   <div class="eye">How it works</div>
   <div class="sec-h" style="margin-bottom:32px;">Three steps.<br>That's it.</div>
   <div class="steps3">
-    <div class="step"><div class="step-n">01</div><div class="step-t">Apply and get approved</div><div class="step-b">Fill in your details, upload a full body photo. We review personally. Approved within 24 hours.</div></div>
+    <div class="step"><div class="step-n">01</div><div class="step-t">Apply and get approved</div><div class="step-b">Fill in your details. We review personally. Approved within 24 hours.</div></div>
     <div class="step"><div class="step-n">02</div><div class="step-t">Accept gigs near you</div><div class="step-b">Go live in the app. Bookings come to you. Accept what works. Decline what doesn't. Your call.</div></div>
     <div class="step"><div class="step-n">03</div><div class="step-t">Show up. Get paid.</div><div class="step-b">Complete the booking. Payment hits your account the same day. Plus 100% of any tips.</div></div>
   </div>
 </section>
 
+<!-- CTA -->
 <div class="cta-dark">
   <div>
     <div class="cta-h">Complete a job.<br>Get paid.</div>
@@ -272,6 +326,12 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
   </div>
 </div>
 
+<!-- LINE 3: NO BORDERS -->
+<div class="no-borders">
+  <div class="no-borders-text">No borders. Just bookings.</div>
+</div>
+
+<!-- APPLY FORM -->
 <section class="sec" id="apply">
   <div class="eye">Apply now</div>
   <form id="apply-form" action="https://api.web3forms.com/submit" method="POST">
@@ -279,51 +339,48 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
     <input type="hidden" name="subject" value="New HAVOC Application">
     <input type="hidden" name="redirect" value="https://havocpresence.com/thanks.html">
     <input type="hidden" name="from_name" value="HAVOC Recruitment">
-
     <div class="form-wrap">
       <div>
         <div class="form-h">Think you've<br>got what it takes?</div>
-        <div class="form-sub">Fill in your details and upload a full body photo. <strong>We review every application personally.</strong> First to apply in your city get first bookings when we launch there.</div>
+        <div class="form-sub">Fill in your details. <strong>We review every application personally.</strong> First to apply in your city get first bookings when we launch there.</div>
       </div>
       <div>
         <div class="error-banner" id="form-error"></div>
-
         <div class="field">
           <label>Full name <span class="req">*</span></label>
-          <input type="text" name="name" id="f-name" placeholder="First and last name" required>
+          <input type="text" name="name" id="f-name" placeholder="First and last name">
         </div>
         <div class="field">
           <label>Email <span class="req">*</span></label>
-          <input type="email" name="email" id="f-email" placeholder="your@email.com" required>
+          <input type="email" name="email" id="f-email" placeholder="your@email.com">
         </div>
         <div class="field">
           <label>Phone number <span class="req">*</span></label>
-          <input type="tel" name="phone" id="f-phone" placeholder="+27 or international" required>
+          <input type="tel" name="phone" id="f-phone" placeholder="+27 or international">
         </div>
         <div class="field">
           <label>Your city <span class="req">*</span></label>
-          <input type="text" name="city" id="f-city" placeholder="City" required>
+          <input type="text" name="city" id="f-city" placeholder="City, Country">
         </div>
         <div class="frow">
           <div class="field">
             <label>Height <span class="req">*</span></label>
-            <input type="text" name="height" id="f-height" placeholder="e.g. 188cm" required>
+            <input type="text" name="height" id="f-height" placeholder="e.g. 188cm">
           </div>
           <div class="field">
             <label>Weight <span class="req">*</span></label>
-            <input type="text" name="weight" id="f-weight" placeholder="e.g. 100kg" required>
+            <input type="text" name="weight" id="f-weight" placeholder="e.g. 100kg">
           </div>
         </div>
         <div class="field">
           <label>Build type <span class="req">*</span></label>
-          <select name="build" id="f-build" required>
+          <select name="build" id="f-build">
             <option value="" disabled selected>Select your build</option>
             <option value="Athletic / muscular">Athletic / muscular</option>
             <option value="Large / heavyweight">Large / heavyweight</option>
             <option value="Tall and lean">Tall and lean</option>
           </select>
         </div>
-
         <button type="button" class="sub-btn" onclick="submitForm()">Submit my application</button>
         <div class="fnote">We review every application personally. We'll be in touch within 24 hours to request a photo and confirm next steps.</div>
       </div>
@@ -331,9 +388,10 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
   </form>
 </section>
 
+<!-- BOTTOM TICKER -->
 <div class="ticker">
   <div class="ticker-inner">
-    <span class="ti">Johannesburg</span><span class="ti">Get paid</span><span class="ti">Miami</span><span class="ti">Singapore</span><span class="ti">Sydney</span><span class="ti">Paris</span><span class="ti">Toronto</span><span class="ti">London</span><span class="ti">New York</span><span class="ti">Dubai</span><span class="ti">Atlanta</span><span class="ti">Pretoria</span><span class="ti">Los Angeles</span><span class="ti">Johannesburg</span><span class="ti">Get paid</span><span class="ti">Miami</span><span class="ti">Singapore</span><span class="ti">Sydney</span><span class="ti">Paris</span><span class="ti">Toronto</span><span class="ti">London</span><span class="ti">New York</span><span class="ti">Dubai</span><span class="ti">Atlanta</span><span class="ti">Pretoria</span><span class="ti">Los Angeles</span>
+    <span class="ti">New York</span><span class="ti">Get paid</span><span class="ti">London</span><span class="ti">Tokyo</span><span class="ti">Dubai</span><span class="ti">São Paulo</span><span class="ti">Paris</span><span class="ti">Singapore</span><span class="ti">Sydney</span><span class="ti">Berlin</span><span class="ti">Toronto</span><span class="ti">Miami</span><span class="ti">Amsterdam</span><span class="ti">Hong Kong</span><span class="ti">Atlanta</span><span class="ti">Johannesburg</span><span class="ti">Los Angeles</span><span class="ti">Get paid</span><span class="ti">New York</span><span class="ti">Get paid</span><span class="ti">London</span><span class="ti">Tokyo</span><span class="ti">Dubai</span><span class="ti">São Paulo</span><span class="ti">Paris</span><span class="ti">Singapore</span><span class="ti">Sydney</span><span class="ti">Berlin</span><span class="ti">Toronto</span><span class="ti">Miami</span><span class="ti">Amsterdam</span><span class="ti">Hong Kong</span><span class="ti">Atlanta</span><span class="ti">Johannesburg</span><span class="ti">Los Angeles</span><span class="ti">Get paid</span>
   </div>
 </div>
 
@@ -344,14 +402,12 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
 </footer>
 
 <script>
-// Mobile menu
 function toggleMenu() {
   document.getElementById('mobile-menu').classList.toggle('open');
 }
 function closeMenu() {
   document.getElementById('mobile-menu').classList.remove('open');
 }
-// Close menu on outside click
 document.addEventListener('click', (e) => {
   const menu = document.getElementById('mobile-menu');
   const hamburger = document.querySelector('.nav-hamburger');
@@ -360,33 +416,22 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Form validation + submit
 function submitForm() {
   const fields = ['f-name', 'f-email', 'f-phone', 'f-city', 'f-height', 'f-weight', 'f-build'];
   const errorEl = document.getElementById('form-error');
   let valid = true;
-
-  // Clear previous errors
   fields.forEach(id => document.getElementById(id).classList.remove('error'));
   errorEl.classList.remove('show');
-
-  // Check each required field
   fields.forEach(id => {
     const el = document.getElementById(id);
-    if (!el.value.trim()) {
-      el.classList.add('error');
-      valid = false;
-    }
+    if (!el.value.trim()) { el.classList.add('error'); valid = false; }
   });
-
   if (!valid) {
-    errorEl.textContent = 'Please fill in all fields and upload a photo before submitting.';
+    errorEl.textContent = 'Please fill in all fields before submitting.';
     errorEl.classList.add('show');
     errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   }
-
-  // All good — submit
   const btn = document.querySelector('.sub-btn');
   btn.disabled = true;
   btn.textContent = 'Submitting...';
