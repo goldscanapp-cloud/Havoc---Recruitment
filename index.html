@@ -113,16 +113,6 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
 .field select option { background: #141414; }
 .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-/* FILE UPLOAD */
-.upload-wrap { position: relative; margin-bottom: 12px; }
-.upload-input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; z-index: 2; }
-.upload { border: 1px dashed rgba(255,255,255,0.12); background: #111; padding: 28px; text-align: center; cursor: pointer; transition: border-color 0.2s; }
-.upload:hover, .upload-wrap:hover .upload { border-color: rgba(255,255,255,0.3); }
-.upload.has-file { border-color: rgba(78,255,145,0.4); background: rgba(78,255,145,0.04); }
-.upload i { font-size: 22px; color: rgba(255,255,255,0.3); }
-.upload-l { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); margin-top: 10px; margin-bottom: 3px; }
-.upload-h { font-size: 11px; color: rgba(255,255,255,0.28); }
-.upload-name { font-size: 12px; color: rgba(78,255,145,0.8); margin-top: 6px; font-weight: 600; }
 
 .sub-btn { width: 100%; background: #fff; color: #080808; font-family: 'Inter',sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.08em; padding: 15px; border: none; cursor: pointer; text-transform: uppercase; transition: opacity 0.2s; }
 .sub-btn:hover { opacity: 0.88; }
@@ -284,7 +274,7 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
 
 <section class="sec" id="apply">
   <div class="eye">Apply now</div>
-  <form id="apply-form" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+  <form id="apply-form" action="https://api.web3forms.com/submit" method="POST">
     <input type="hidden" name="access_key" value="7f5a8b5e-db68-45a0-80d8-aea6fa64632a">
     <input type="hidden" name="subject" value="New HAVOC Application">
     <input type="hidden" name="redirect" value="https://havocpresence.com/thanks.html">
@@ -334,21 +324,8 @@ body { background: #080808; font-family: 'Inter', sans-serif; color: #fff; -webk
           </select>
         </div>
 
-        <div class="field">
-          <label>Full body photo <span class="req">*</span></label>
-          <div class="upload-wrap">
-            <input type="file" name="photo" id="f-photo" class="upload-input" accept="image/*" onchange="handleFileSelect(this)">
-            <div class="upload" id="upload-box">
-              <i class="ti ti-camera"></i>
-              <div class="upload-l">Tap to upload your photo</div>
-              <div class="upload-h">Full body, clear photo. JPG or PNG.</div>
-              <div class="upload-name" id="upload-name"></div>
-            </div>
-          </div>
-        </div>
-
         <button type="button" class="sub-btn" onclick="submitForm()">Submit my application</button>
-        <div class="fnote">We review every application personally. You'll hear from us within 24 hours.</div>
+        <div class="fnote">We review every application personally. We'll be in touch within 24 hours to request a photo and confirm next steps.</div>
       </div>
     </div>
   </form>
@@ -383,20 +360,6 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// File upload feedback
-function handleFileSelect(input) {
-  const file = input.files[0];
-  const box = document.getElementById('upload-box');
-  const name = document.getElementById('upload-name');
-  if (file) {
-    box.classList.add('has-file');
-    name.textContent = '✓ ' + file.name;
-  } else {
-    box.classList.remove('has-file');
-    name.textContent = '';
-  }
-}
-
 // Form validation + submit
 function submitForm() {
   const fields = ['f-name', 'f-email', 'f-phone', 'f-city', 'f-height', 'f-weight', 'f-build'];
@@ -415,13 +378,6 @@ function submitForm() {
       valid = false;
     }
   });
-
-  // Check photo
-  const photo = document.getElementById('f-photo');
-  if (!photo.files || !photo.files[0]) {
-    document.getElementById('upload-box').style.borderColor = 'rgba(255,80,80,0.6)';
-    valid = false;
-  }
 
   if (!valid) {
     errorEl.textContent = 'Please fill in all fields and upload a photo before submitting.';
