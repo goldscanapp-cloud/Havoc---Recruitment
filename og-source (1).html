@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background: #080808;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+  .border-top { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #fff; }
+  .border-bot { position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: #fff; }
+
+  .logo-box {
+    position: absolute;
+    top: 36px; left: 48px;
+    border: 2px solid #fff;
+    padding: 5px 14px;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.25em;
+  }
+  .recruiting {
+    position: absolute;
+    top: 50px; right: 48px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+  }
+
+  /* LEFT — moved up */
+  .left {
+    position: absolute;
+    left: 48px; top: 80px;
+    width: 680px;
+  }
+  /* Solid — "Big built." */
+  .h-solid {
+    font-size: 148px; font-weight: 800;
+    line-height: 0.88; letter-spacing: -0.04em;
+    color: #fff;
+  }
+  /* Outline — "Get paid." */
+  .h-outline {
+    font-size: 148px; font-weight: 800;
+    line-height: 0.88; letter-spacing: -0.04em;
+    -webkit-text-stroke: 3px rgba(255,255,255,0.85);
+    color: transparent;
+    margin-bottom: 20px;
+  }
+  .divider { width: 100%; height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 16px; }
+  .tagline { font-size: 13px; font-weight: 600; letter-spacing: 0.14em; color: rgba(255,255,255,0.28); text-transform: uppercase; }
+
+  /* DIVIDER VERTICAL */
+  .vdivider {
+    position: absolute;
+    left: 796px; top: 36px; bottom: 36px;
+    width: 1px; background: rgba(255,255,255,0.07);
+  }
+
+  /* RIGHT */
+  .right {
+    position: absolute;
+    left: 824px; top: 90px;
+    width: 328px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .rate-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 14px 18px;
+  }
+  .rate-region {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 5px;
+  }
+  .rate-amount { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: #fff; margin-bottom: 3px; }
+  .rate-keep { font-size: 11px; color: rgba(255,255,255,0.28); }
+
+  /* BOTTOM */
+  .bottom-bar {
+    position: absolute;
+    bottom: 4px; left: 0; right: 0;
+    height: 62px;
+    background: rgba(255,255,255,0.03);
+    border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex; align-items: center;
+    padding: 0 48px;
+    justify-content: space-between;
+  }
+  .bottom-left { display: flex; align-items: center; gap: 14px; }
+  .bottom-accent { width: 3px; height: 30px; background: #fff; }
+  .bottom-url { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; color: #fff; }
+  .bottom-sub { font-size: 11px; color: rgba(255,255,255,0.28); margin-top: 2px; }
+  .bottom-handle { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: rgba(255,255,255,0.22); }
+</style>
+</head>
+<body>
+  <div class="border-top"></div>
+  <div class="border-bot"></div>
+  <div class="logo-box">HAVOC</div>
+  <div class="recruiting">Now recruiting worldwide</div>
+
+  <div class="left">
+    <div class="h-solid">Big built.</div>
+    <div class="h-outline">Get paid.</div>
+    <div class="divider"></div>
+    <div class="tagline">Your city &nbsp;·&nbsp; Your gig &nbsp;·&nbsp; Your money</div>
+  </div>
+
+  <div class="vdivider"></div>
+
+  <div class="right">
+    <div class="rate-card">
+      <div class="rate-region">USA · UK · EU</div>
+      <div class="rate-amount">$120 · £90 · €100</div>
+      <div class="rate-keep">You keep 80% — every booking</div>
+    </div>
+    <div class="rate-card">
+      <div class="rate-region">16 cities worldwide</div>
+      <div class="rate-amount">No borders.</div>
+      <div class="rate-keep">Just bookings.</div>
+    </div>
+    <div class="rate-card">
+      <div class="rate-region">South Africa</div>
+      <div class="rate-amount">R500/hr</div>
+      <div class="rate-keep">You keep R400/hr</div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="bottom-left">
+      <div class="bottom-accent"></div>
+      <div>
+        <div class="bottom-url">havocpresence.com</div>
+        <div class="bottom-sub">The presence you need. When you need it.</div>
+      </div>
+    </div>
+    <div class="bottom-handle">@havocpresence</div>
+  </div>
+</body>
+</html>
